@@ -12,15 +12,24 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".activities.MainActivity.MainActivity">
+
+            <!-- <intent-filter> -->
+            <!-- <action android:name="android.intent.action.MAIN" /> -->
+
+
+            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
+            <!-- </intent-filter> -->
+        </activity>
+        <activity android:name=".activities.MyPlantsActivity.MyPlantsActivity" />
+        <activity android:name=".activities.PlantActivity.PlantActivity" />
+        <activity android:name=".activities.LoginActivity.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activities.MyPlantsActivity.MyPlantsActivity" />
-        <activity android:name=".activities.PlantActivity.PlantActivity" />
-        <activity android:name=".activities.LoginActivity.LoginActivity"></activity>
+        <activity android:name=".activities.RegisterActivity.RegisterActivity"></activity>
     </application>
 
 </manifest>

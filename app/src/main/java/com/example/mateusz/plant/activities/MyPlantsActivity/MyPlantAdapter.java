@@ -34,13 +34,13 @@ public class MyPlantAdapter extends RecyclerView.Adapter<MyPlantAdapter.ViewHold
         Plant plant = myPlants.get(position);
         holder.plantName.setText(plant.getPlant_name());
         holder.latinName.setText(plant.getLatin_name());
-        switch (plant.getHealth())
-        {
-            case 1:holder.healthImg.setImageResource(R.drawable.ic_sentiment_satisfied_green_500_24dp);break;
-            case 2:holder.healthImg.setImageResource(R.drawable.ic_sentiment_neutral_yellow_500_24dp);break;
-            case 3:holder.healthImg.setImageResource(R.drawable.ic_sentiment_dissatisfied_red_500_24dp);break;
-            default: holder.healthImg.setImageResource(R.drawable.ic_sentiment_satisfied_green_500_24dp);break;
-        }
+//        switch (plant.getHealth())
+//        {
+//            case 1:holder.healthImg.setImageResource(R.drawable.ic_sentiment_satisfied_green_500_24dp);break;
+//            case 2:holder.healthImg.setImageResource(R.drawable.ic_sentiment_neutral_yellow_500_24dp);break;
+//            case 3:holder.healthImg.setImageResource(R.drawable.ic_sentiment_dissatisfied_red_500_24dp);break;
+//            default: holder.healthImg.setImageResource(R.drawable.ic_sentiment_satisfied_green_500_24dp);break;
+//        }
 
 
 

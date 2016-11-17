@@ -70,13 +70,13 @@ public class PlantActivity extends AppCompatActivity implements PlantInterface {
                 if(isDeviceSupportCamera()) captureImage();
             }
         });
-        loadPicture(DBConnection.PHOTO_URL+plant.getPhoto_url());
+        loadPicture(DBConnection.PHOTO_URL+plant.getImageAdress());
 
         plantPhoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showPictureDialog(plant.getPhoto_url());
-                loadPicture2(DBConnection.PHOTO_URL+plant.getPhoto_url());
+                showPictureDialog(plant.getImageAdress());
+                loadPicture2(DBConnection.PHOTO_URL+plant.getImageAdress());
             }
         });
         pictureDialogInit();
@@ -127,6 +127,7 @@ public class PlantActivity extends AppCompatActivity implements PlantInterface {
                     .with(this)
                     .load(url)
                     .into(plantPhoto);
+        Log.d("URRRRRRRLLLL", url);
     }
 
     public void loadPicture2(String url){
