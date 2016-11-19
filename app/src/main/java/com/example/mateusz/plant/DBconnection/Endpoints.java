@@ -28,6 +28,6 @@ public interface Endpoints {
     @GET("ArrayWithObjects.txt")
     Call<List<DataBody>> getPersons();
     @Multipart
-    @POST("upload_file.php")
-    Call<UploadResponse> upload(@Part MultipartBody.Part file);
+    @POST("image")
+    Call<UploadResponse> upload(@Part MultipartBody.Part file, @Part("idPlant") int idPlant);
 }

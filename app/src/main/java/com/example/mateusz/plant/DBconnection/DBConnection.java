@@ -37,7 +37,7 @@ public class DBConnection implements DBConnectionInt{
     // File upload url (replace the ip with your server address)
     public static final String FILE_UPLOAD_URL = "http://192.168.0.103/plant_application/images/";
     // Directory name to store captured images and videos
-    public static final String IMAGE_DIRECTORY_NAME = "Android File Upload";
+    public static final String IMAGE_DIRECTORY_NAME = "Plant Application";
     public DBConnection() {
         OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
         httpClient.addInterceptor(new Interceptor() {
@@ -104,15 +104,16 @@ public class DBConnection implements DBConnectionInt{
     }
 
     @Override
-    public void uploadFile(MultipartBody.Part body) {
-        Call<UploadResponse> call = api.upload(body);
+    public void uploadFile(MultipartBody.Part body, int idPlant, final OnDownloadFinishedListener<UploadResponse> listener) {
+        Call<UploadResponse> call = api.upload(body, idPlant);
         call.enqueue(new Callback<UploadResponse>() {
             @Override
             public void onResponse(Call<UploadResponse> call,
                                    Response<UploadResponse> response) {
                 Log.v("Upload", "success");
 //                Log.d("Response", response.body().getFile_name());
-                Log.d("OOOOOOOOOOOOOOOOOOOOOOO",response.body().getMessage());
+                Log.d("OOOOOOOOOOOOOOOOOOOOOOO",response.body().getFile_path());
+                listener.onSuccess(response.body());
             }
 
             @Override

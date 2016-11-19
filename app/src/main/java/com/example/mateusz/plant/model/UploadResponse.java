@@ -8,10 +8,6 @@ import com.google.gson.annotations.SerializedName;
 public class UploadResponse {
     @SerializedName("file_name")
     String file_name;
-    @SerializedName("email")
-    String email;
-    @SerializedName("website")
-    String website;
     @SerializedName("error")
     String error;
     @SerializedName("message")
@@ -25,22 +21,6 @@ public class UploadResponse {
 
     public void setFile_name(String file_name) {
         this.file_name = file_name;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getWebsite() {
-        return website;
-    }
-
-    public void setWebsite(String website) {
-        this.website = website;
     }
 
     public String getError() {

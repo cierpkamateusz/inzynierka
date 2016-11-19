@@ -24,6 +24,13 @@ public class LoginActivity extends AppCompatActivity implements ILoginActivity{
         emailText = (EditText)findViewById(R.id.emailText);
         passText = (EditText)findViewById(R.id.passwordText);
         loginButton = (Button)findViewById(R.id.loginButton);
+        loginButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                onClickLogin();
+            }
+        });
         presenter = new LoginPresenter(this);
 //        presenter.tryLogin();
     }
@@ -39,7 +46,7 @@ public class LoginActivity extends AppCompatActivity implements ILoginActivity{
     }
 
     @Override
-    public void onClickLogin(View view) {
+    public void onClickLogin() {
         presenter.onClickLogin();
     }
 
