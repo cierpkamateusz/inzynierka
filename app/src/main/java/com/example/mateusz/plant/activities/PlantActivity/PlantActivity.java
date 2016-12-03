@@ -1,9 +1,15 @@
 package com.example.mateusz.plant.activities.PlantActivity;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
@@ -21,14 +27,25 @@ import com.example.mateusz.plant.R;
 import com.example.mateusz.plant.model.Plant;
 import com.squareup.picasso.Picasso;
 
-public class PlantActivity extends AppCompatActivity implements PlantInterface {
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+
+public class PlantActivity extends AppCompatActivity implements PlantInterface, SensorEventListener {
 
     private TextView plantName;
     private TextView latinName;
+    private TextView description;
+    private TextView sensorValue;
 
     public ImageView getPlantPhoto() {
         return plantPhoto;
     }
+
+    private SensorManager sensorManager;
+    private Sensor lightSensor;
 
     private ImageView plantPhoto;
     protected Plant plant;
@@ -55,11 +72,14 @@ public class PlantActivity extends AppCompatActivity implements PlantInterface {
         setContentView(R.layout.activity_plant);
         plantName = (TextView)findViewById(R.id.plantName);
         latinName = (TextView)findViewById(R.id.latinName);
+        description = (TextView)findViewById(R.id.description);
+        sensorValue = (TextView)findViewById(R.id.sensorValue);
         presenter = new PlantPresenter(this);
         Intent intent = getIntent();
         plant = (Plant)intent.getSerializableExtra("Plant");
         plantName.setText(plant.getPlant_name());
         latinName.setText(plant.getLatin_name());
+        description.setText(plant.getDescription());
         plantPhoto = (ImageView) findViewById(R.id.plantPhoto);
         cameraButton = (ImageButton) findViewById(R.id.cameraButton);
         cameraButton.setOnClickListener(new View.OnClickListener() {
@@ -68,7 +88,7 @@ public class PlantActivity extends AppCompatActivity implements PlantInterface {
                 if(presenter.isDeviceSupportCamera()) captureImage();
             }
         });
-        presenter.loadPicture(DBConnection.PHOTO_URL+plant.getImageAdress());
+
 
         plantPhoto.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -77,12 +97,14 @@ public class PlantActivity extends AppCompatActivity implements PlantInterface {
                 loadPicture2(DBConnection.PHOTO_URL+plant.getImageAdress());
             }
         });
-        pictureDialogInit();
+        sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+        lightSensor = sensorManager.getDefaultSensor(Sensor.TYPE_LIGHT);
+
     }
 
 
-
-    private void pictureDialogInit(){
+    @Override
+    public void pictureDialogInit(){
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
         builder.setPositiveButton("ok", new DialogInterface.OnClickListener() {
@@ -145,6 +167,33 @@ public class PlantActivity extends AppCompatActivity implements PlantInterface {
                 // successfully captured the image
                 // launching upload activity
 //                launchUploadActivity(true);
+                try {
+                    Bitmap bitmap = presenter.handleSamplingAndRotationBitmap(getApplicationContext(),presenter.fileUri);
+                    File file = new File(presenter.fileUri.getPath());
+                    if(!file.exists()){
+                        try {
+                            file.createNewFile();
+                        } catch (IOException e) {
+                            // TODO Auto-generated catch block
+                            e.printStackTrace();
+                        }
+                    }else{
+                        file.delete();
+                        try {
+                            file.createNewFile();
+                        } catch (IOException e) {
+                            // TODO Auto-generated catch block
+                            e.printStackTrace();
+                        }
+                    }
+                    OutputStream os = new BufferedOutputStream(new FileOutputStream(file));
+
+                    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, os);
+                    os.close();
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
                 presenter.uploadFileToServer();
 
             } else if (resultCode == RESULT_CANCELED) {
@@ -220,5 +269,29 @@ public class PlantActivity extends AppCompatActivity implements PlantInterface {
     }
 
 
+    @Override
+    public void onSensorChanged(SensorEvent event) {
+        float brightnessLevel = event.values[0];
+        sensorValue.setText(String.valueOf(brightnessLevel));
+    }
 
+    @Override
+    public void onAccuracyChanged(Sensor sensor, int accuracy) {
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        presenter.loadPicture(DBConnection.PHOTO_URL+plant.getImageAdress());
+        pictureDialogInit();
+        sensorManager.registerListener(this, lightSensor, SensorManager.SENSOR_DELAY_NORMAL);
+
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        sensorManager.unregisterListener(this);
+    }
 }

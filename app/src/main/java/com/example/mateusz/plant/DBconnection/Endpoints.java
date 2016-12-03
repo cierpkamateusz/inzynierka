@@ -1,7 +1,9 @@
 package com.example.mateusz.plant.DBconnection;
 
 import com.example.mateusz.plant.model.DataBody;
+import com.example.mateusz.plant.model.Message;
 import com.example.mateusz.plant.model.Plants;
+import com.example.mateusz.plant.model.Remind;
 import com.example.mateusz.plant.model.UploadResponse;
 import com.example.mateusz.plant.model.User;
 
@@ -24,10 +26,17 @@ public interface Endpoints {
     @POST("register")
     Call<ResponseBody> register(@Part("name") String name, @Part("email") String email, @Part("password") String password);
     @GET("user_plants")
-    Call<Plants> getPlants();
+    Call<Plants> getUserPlants();
+    @Multipart
+    @POST("user_plants")
+    Call<Message> addUserPlant(@Part("idPlant") int idPlant);
+    @GET("plant")
+    Call<Plants> getAllPlants();
     @GET("ArrayWithObjects.txt")
     Call<List<DataBody>> getPersons();
     @Multipart
     @POST("image")
-    Call<UploadResponse> upload(@Part MultipartBody.Part file, @Part("idPlant") int idPlant);
+    Call<UploadResponse> upload(@Part MultipartBody.Part file, @Part("idUserPlant") int idUserPlant);
+    @GET("user_reminds")
+    Call<List<Remind>> getUserReminds();
 }

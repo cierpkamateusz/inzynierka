@@ -1,15 +1,12 @@
-package com.example.mateusz.plant.activities.MyPlantsActivity;
-
-import android.view.View;
+package com.example.mateusz.plant.activities.AllPlantsActivity;
 
 import com.example.mateusz.plant.model.Plant;
 import com.example.mateusz.plant.model.Plants;
 
 /**
- * Created by Mateusz on 2016-09-09.
+ * Created by Mateusz on 2016-11-19.
  */
-public interface IMyPlants {
-
+public interface IAllPlantsActivity {
     void showToast(String message);
 
     void loadPlants(Plants list);
@@ -20,6 +17,5 @@ public interface IMyPlants {
     void setEmptyView();
 
     void goToPlantActivity(Plant plant);
-    void onClickAddPlant(View view);
 
 }

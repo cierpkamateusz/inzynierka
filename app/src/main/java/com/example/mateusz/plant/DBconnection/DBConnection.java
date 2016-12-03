@@ -4,7 +4,9 @@ import android.util.Log;
 
 import com.example.mateusz.plant.model.Credentials;
 import com.example.mateusz.plant.model.DataBody;
+import com.example.mateusz.plant.model.Message;
 import com.example.mateusz.plant.model.Plants;
+import com.example.mateusz.plant.model.Remind;
 import com.example.mateusz.plant.model.UploadResponse;
 import com.example.mateusz.plant.model.User;
 
@@ -30,12 +32,12 @@ public class DBConnection implements DBConnectionInt{
     private String auth = "";
     private Retrofit retrofit;
     private Endpoints api;
-//    public static final String BASE_URL = "http://10.0.2.2/android_connect/";   //For emulator
-//    public static final String PHOTO_URL = "http://10.0.2.2/flower_pictures/";
+//    public static final String BASE_URL = "http://10.0.2.2/plant_application/v1/";   //For emulator
+//    public static final String PHOTO_URL = "http://10.0.2.2/plant_application/images/";
     public static final String BASE_URL = "http://192.168.0.103:8081/plant_application/v1/";   //For device
     public static final String PHOTO_URL = "http://192.168.0.103:8081/plant_application/images/";
     // File upload url (replace the ip with your server address)
-    public static final String FILE_UPLOAD_URL = "http://192.168.0.103/plant_application/images/";
+//    public static final String FILE_UPLOAD_URL = "http://192.168.0.101:8081/plant_application/images/";
     // Directory name to store captured images and videos
     public static final String IMAGE_DIRECTORY_NAME = "Plant Application";
     public DBConnection() {
@@ -64,7 +66,7 @@ public class DBConnection implements DBConnectionInt{
 
     @Override
     public void getAllPlants(final OnDownloadFinishedListener listener) {
-        Call<Plants> call = api.getPlants();
+        Call<Plants> call = api.getAllPlants();
         Log.d("asdasd1","dsdsadsa1");
         call.enqueue(new Callback<Plants>() {
             @Override
@@ -87,6 +89,46 @@ public class DBConnection implements DBConnectionInt{
     }
 
     @Override
+    public void getUserPlants(final OnDownloadFinishedListener listener) {
+        Call<Plants> call = api.getUserPlants();
+        Log.d("asdasd1","dsdsadsa1");
+        call.enqueue(new Callback<Plants>() {
+            @Override
+            public void onResponse(Call<Plants> call, Response<Plants> response) {
+                int statusCode = response.code();
+                Log.d("asdasd2OOOOOOOOO",String.valueOf(response.code()));
+
+
+                Plants plants = response.body();
+                listener.onSuccess(plants);
+
+            }
+
+            @Override
+            public void onFailure(Call<Plants> call, Throwable t) {
+                Log.d("asdasd3","dsdsadsa3");
+                listener.onError();
+            }
+        });
+    }
+
+    @Override
+    public void addUserPlant(int idPlant, OnDownloadFinishedListener<Message> listener) {
+        Call<Message> call = api.addUserPlant(idPlant);
+        call.enqueue(new Callback<Message>() {
+            @Override
+            public void onResponse(Call<Message> call, Response<Message> response) {
+
+            }
+
+            @Override
+            public void onFailure(Call<Message> call, Throwable t) {
+
+            }
+        });
+    }
+
+    @Override
     public void getAllPersons(final OnDownloadFinishedListener<List<DataBody>> succes) {
         Call<List<DataBody>> call = api.getPersons();
         call.enqueue(new Callback<List<DataBody>>() {
@@ -104,15 +146,17 @@ public class DBConnection implements DBConnectionInt{
     }
 
     @Override
-    public void uploadFile(MultipartBody.Part body, int idPlant, final OnDownloadFinishedListener<UploadResponse> listener) {
-        Call<UploadResponse> call = api.upload(body, idPlant);
+    public void uploadFile(MultipartBody.Part body, int idUserPlant, final OnDownloadFinishedListener<UploadResponse> listener) {
+        Call<UploadResponse> call = api.upload(body, idUserPlant);
         call.enqueue(new Callback<UploadResponse>() {
             @Override
             public void onResponse(Call<UploadResponse> call,
                                    Response<UploadResponse> response) {
                 Log.v("Upload", "success");
 //                Log.d("Response", response.body().getFile_name());
+                Log.d("OOOOOOOOOOOOOOOOOOOOOOO",response.body().getMessage());
                 Log.d("OOOOOOOOOOOOOOOOOOOOOOO",response.body().getFile_path());
+
                 listener.onSuccess(response.body());
             }
 
@@ -124,7 +168,7 @@ public class DBConnection implements DBConnectionInt{
     }
 
     @Override
-    public void login(String email, String password, final OnDownloadFinishedListener<User> listener) {
+    public void login(String email, String password, final OnLoginListener<User> listener) {
         Credentials credentials = new Credentials(email, password);
         Call<User> call = api.login(email,password);
 
@@ -133,9 +177,12 @@ public class DBConnection implements DBConnectionInt{
             public void onResponse(Call<User> call, Response<User> response) {
                 if(response.body()!=null){
                     Log.d("Login resp",response.body().getName());
+                    listener.onSuccess(response.body());
+                    auth = response.body().getApiKey();
                 }
-                listener.onSuccess(response.body());
-                auth = response.body().getApiKey();
+                else
+                    Log.d("Wrong: ",response.message());
+                    listener.onWrongCredentials();
             }
 
             @Override
@@ -159,6 +206,24 @@ public class DBConnection implements DBConnectionInt{
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
 
+            }
+        });
+    }
+
+    @Override
+    public void getReminds(final OnDownloadFinishedListener<List<Remind>> onDownloadFinishedListener) {
+        Call<List<Remind>> call = api.getUserReminds();
+        Log.d("getRem","success");
+        call.enqueue(new Callback<List<Remind>>() {
+            @Override
+            public void onResponse(Call<List<Remind>> call, Response<List<Remind>> response) {
+                Log.d("onResponse","success");
+                onDownloadFinishedListener.onSuccess(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<List<Remind>> call, Throwable t) {
+                Log.d("onFailure",t.toString());
             }
         });
     }

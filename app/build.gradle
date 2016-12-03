@@ -31,4 +31,5 @@ dependencies {
     compile 'com.squareup.picasso:picasso:2.5.2'
     compile 'com.google.code.gson:gson:2.6.2'
     compile 'net.gotev:uploadservice:3.0.3'
+    compile 'com.android.support:design:23.3.0'
 }

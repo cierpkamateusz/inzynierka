@@ -10,8 +10,9 @@ import com.example.mateusz.plant.model.User;
 public interface ILoginActivity {
     String getEmail();
     String getPassword();
-    void onClickLogin();
+    void onClickLogin(View view);
     void navigateToMainActivity(User user);
     void onClickRegister(View view);
     void navigateToRegisterActivity();
+
 }

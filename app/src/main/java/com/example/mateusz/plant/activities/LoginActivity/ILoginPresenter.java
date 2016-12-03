@@ -7,4 +7,6 @@ public interface ILoginPresenter {
     void onClickLogin();
 
     void onClickRegister();
+
+    public void tryLogin();
 }

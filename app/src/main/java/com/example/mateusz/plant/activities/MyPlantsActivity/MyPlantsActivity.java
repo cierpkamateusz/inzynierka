@@ -14,9 +14,11 @@ import android.widget.Toast;
 import com.example.mateusz.plant.ClickListener;
 import com.example.mateusz.plant.R;
 import com.example.mateusz.plant.RecyclerTouchListener;
+import com.example.mateusz.plant.activities.AllPlantsActivity.AllPlantsActivity;
 import com.example.mateusz.plant.activities.PlantActivity.PlantActivity;
 import com.example.mateusz.plant.model.Plant;
 import com.example.mateusz.plant.model.Plants;
+
 
 public class MyPlantsActivity extends AppCompatActivity implements IMyPlants {
 
@@ -54,7 +56,13 @@ public class MyPlantsActivity extends AppCompatActivity implements IMyPlants {
         textEmptyView = (TextView) findViewById(R.id.textEmptyView);
         presenter = new MyPlantsPresenter(this);
         showProgress();
-        presenter.getAllPlants();
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        presenter.getUserPlants();
     }
 
     @Override
@@ -95,6 +103,12 @@ public class MyPlantsActivity extends AppCompatActivity implements IMyPlants {
     public void goToPlantActivity(Plant plant) {
         Intent intent = new Intent(this, PlantActivity.class);
         intent.putExtra("Plant",plant);
+        startActivity(intent);
+    }
+
+    @Override
+    public void onClickAddPlant(View view) {
+        Intent intent = new Intent(this, AllPlantsActivity.class);
         startActivity(intent);
     }
 

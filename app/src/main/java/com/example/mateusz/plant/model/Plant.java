@@ -11,6 +11,8 @@ public class Plant implements Serializable {
 
     @SerializedName("idPlant")
     private int idPlant;
+    @SerializedName("idUserPlant")
+    private int idUserPlant;
     @SerializedName("name")
     private String Plant_name;
     @SerializedName("latinName")
@@ -21,28 +23,14 @@ public class Plant implements Serializable {
     private String imageAdress;
     @SerializedName("location")
     private String location;
-//    @SerializedName("Date")
-//    private String Date;
-//    @SerializedName("Photo_url")
-//    private String photo_url;
-//    @SerializedName("Health")
-//    private Integer health;
 
-//    public Integer getHealth() {
-//        return health;
-//    }
-//
-//    public void setHealth(Integer health) {
-//        this.health = health;
-//    }
-//
-//    public String getDate() {
-//        return Date;
-//    }
-//
-//    public void setDate(String date) {
-//        this.Date = date;
-//    }
+    public int getIdUserPlant() {
+        return idUserPlant;
+    }
+
+    public void setIdUserPlant(int idUserPlant) {
+        this.idUserPlant = idUserPlant;
+    }
 
     public String getImageAdress() {
         return imageAdress;

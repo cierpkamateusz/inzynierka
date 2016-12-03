@@ -2,4 +2,13 @@
     <string name="app_name">Plant</string>
     <string name="moje_rosliny">Moje rosliny</string>
     <string name="plant">Plant</string>
+    <string name="register">Zarejestruj się</string>
+    <string name="no_account">Nie masz jeszcze konta?</string>
+    <string name="login">Zaloguj</string>
+    <string name="title_activity_main2">Main2Activity</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
 </resources>

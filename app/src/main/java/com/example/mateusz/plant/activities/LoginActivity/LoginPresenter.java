@@ -3,8 +3,9 @@ package com.example.mateusz.plant.activities.LoginActivity;
 import android.util.Log;
 
 import com.example.mateusz.plant.DBconnection.DBConnection;
-import com.example.mateusz.plant.DBconnection.OnDownloadFinishedListener;
+import com.example.mateusz.plant.DBconnection.OnLoginListener;
 import com.example.mateusz.plant.Factory;
+import com.example.mateusz.plant.model.Credentials;
 import com.example.mateusz.plant.model.User;
 
 /**
@@ -23,17 +24,22 @@ public class LoginPresenter implements ILoginPresenter {
         final String email = view.getEmail();
         final String password = view.getPassword();
 
-        conn.login(email, password, new OnDownloadFinishedListener<User>() {
+        conn.login(email, password, new OnLoginListener<User>() {
+            @Override
+            public void onWrongCredentials() {
+                Log.d("onClickLogin","wrong");
+            }
+
             @Override
             public void onSuccess(User arg) {
                 Log.d("onClickLogin in prese", email);
+//                view.saveCredentials(new Credentials(email,password));
                 view.navigateToMainActivity(arg);
-
             }
 
             @Override
             public void onError() {
-                Log.d("onClickLogin false", email);
+                Log.d("onClickLogin","error");
             }
         });
     }
@@ -42,4 +48,35 @@ public class LoginPresenter implements ILoginPresenter {
     public void onClickRegister() {
         view.navigateToRegisterActivity();
     }
+
+    @Override
+    public void tryLogin() {
+//        view.showProgressBar();
+        Credentials credentials = view.getCredentials();
+
+        if(credentials == null) {
+//            loginView.hideProgressBar();
+            return;
+        }
+        else {
+            conn.login(credentials.getEmail(), credentials.getPassword(), new OnLoginListener<User>() {
+                @Override
+                public void onWrongCredentials() {
+
+                }
+
+                @Override
+                public void onSuccess(User arg) {
+                    view.navigateToMainActivity(arg);
+
+                }
+
+                @Override
+                public void onError() {
+
+                }
+            });
+        }
+    }
+
 }

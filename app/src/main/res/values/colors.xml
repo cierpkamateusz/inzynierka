@@ -3,9 +3,9 @@
     <color name="colorPrimary">#ffffff</color>
     <color name="colorPrimaryDark">#000000</color>
     <color name="colorAccent">#ffffff</color>
-    <color name="primaryGreen">#a6c26d</color>
-    <color name="secondaryGreen">#C0D497</color>
-    <color name="darkGreen">#5c2c1a</color>
+    <color name="primaryGreen">#ffffff</color>
+    <color name="secondaryGreen">#ffffff</color>
+    <color name="darkGreen">#dfdfdf</color>
     <color name="primaryDarkGray">#696b6a</color>
     <color name="secondaryDarkGray">#888988</color>
     <color name="primaryBrightGray">#f4f3f1</color>

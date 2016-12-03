@@ -5,8 +5,7 @@ package com.example.mateusz.plant.activities.MyPlantsActivity;
  */
 public interface MyPlantsPresenterInt {
 
-    void getAllPlants();
-    void getAllPersons();
+    void getUserPlants();
     void onClickPlant(int position);
 
 }

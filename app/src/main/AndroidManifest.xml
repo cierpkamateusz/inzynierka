@@ -31,7 +31,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".activities.RegisterActivity.RegisterActivity" />
-        <activity android:name=".activities.AllPlantsActivity.AllPlantsActivity"></activity>
+        <activity android:name=".activities.AllPlantsActivity.AllPlantsActivity" />
+        <activity android:name=".activities.RemindActivity.RemindsActivity"></activity>
     </application>
 
 </manifest>
