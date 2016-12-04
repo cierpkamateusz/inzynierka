@@ -227,5 +227,9 @@ public class DBConnection implements DBConnectionInt{
             }
         });
     }
+    public void closeSession() {
+        //TODO close session on server
+        auth = "";
+    }
 
 }

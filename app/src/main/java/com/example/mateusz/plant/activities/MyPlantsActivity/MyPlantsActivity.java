@@ -2,10 +2,10 @@ package com.example.mateusz.plant.activities.MyPlantsActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -15,12 +15,13 @@ import com.example.mateusz.plant.ClickListener;
 import com.example.mateusz.plant.R;
 import com.example.mateusz.plant.RecyclerTouchListener;
 import com.example.mateusz.plant.activities.AllPlantsActivity.AllPlantsActivity;
+import com.example.mateusz.plant.activities.MyActivity;
 import com.example.mateusz.plant.activities.PlantActivity.PlantActivity;
 import com.example.mateusz.plant.model.Plant;
 import com.example.mateusz.plant.model.Plants;
 
 
-public class MyPlantsActivity extends AppCompatActivity implements IMyPlants {
+public class MyPlantsActivity extends MyActivity implements IMyPlants {
 
     private RecyclerView myPlantsRecycler;
     private RecyclerView.Adapter myPlantAdapter;
@@ -33,6 +34,9 @@ public class MyPlantsActivity extends AppCompatActivity implements IMyPlants {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_plants);
+        Toolbar myToolbar = (Toolbar) findViewById(R.id.include);
+        setSupportActionBar(myToolbar);
+
         myPlantsRecycler = (RecyclerView) findViewById(R.id.my_plants_recycler);
         myPlantsRecycler.setHasFixedSize(false);
         mLayoutManager = new LinearLayoutManager(this);

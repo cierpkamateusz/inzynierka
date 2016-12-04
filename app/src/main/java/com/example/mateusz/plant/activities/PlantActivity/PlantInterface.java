@@ -5,4 +5,5 @@ package com.example.mateusz.plant.activities.PlantActivity;
  */
 public interface PlantInterface {
     void pictureDialogInit();
+    void recyclerInit();
 }

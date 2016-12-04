@@ -22,6 +22,16 @@ public class Remind {
     private String name;
     @SerializedName("date")
     private String date;
+    @SerializedName("type")
+    private String type;
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
 
     public String getDate() {
         return date;

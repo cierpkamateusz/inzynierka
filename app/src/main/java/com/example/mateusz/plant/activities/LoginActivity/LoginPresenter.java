@@ -33,7 +33,7 @@ public class LoginPresenter implements ILoginPresenter {
             @Override
             public void onSuccess(User arg) {
                 Log.d("onClickLogin in prese", email);
-//                view.saveCredentials(new Credentials(email,password));
+                view.saveCredentials(new Credentials(email,password));
                 view.navigateToMainActivity(arg);
             }
 

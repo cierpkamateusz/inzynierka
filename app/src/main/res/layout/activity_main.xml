@@ -5,7 +5,11 @@
     android:layout_height="match_parent"
     tools:context=".activities.MainActivity.MainActivity"
     android:background="@drawable/primary_green_gradient">
-
+    <include
+        layout="@layout/toolbar_main"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/MainActToobar" />
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -27,11 +31,7 @@
         android:layout_marginBottom="137dp"
         android:src="@drawable/ic_local_florist_light_green_100_48dp" />
 
-    <include
-        layout="@layout/toolbar_main"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/include2" />
+
 
     <TextView
         android:layout_width="wrap_content"
@@ -39,7 +39,7 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Large Text"
         android:id="@+id/nameText"
-        android:layout_below="@+id/include2"
+        android:layout_below="@+id/MainActToobar"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="46dp" />
 
@@ -53,4 +53,6 @@
         android:background="@color/primaryGreen"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true" />
+    <View style="@style/Divider"
+        android:layout_below="@+id/goToMyReminds"/>
 </RelativeLayout>

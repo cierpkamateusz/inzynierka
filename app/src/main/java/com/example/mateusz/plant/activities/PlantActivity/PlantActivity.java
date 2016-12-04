@@ -14,7 +14,10 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageButton;
@@ -22,8 +25,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.mateusz.plant.ClickListener;
 import com.example.mateusz.plant.DBconnection.DBConnection;
 import com.example.mateusz.plant.R;
+import com.example.mateusz.plant.RecyclerTouchListener;
+import com.example.mateusz.plant.activities.MyActivity;
 import com.example.mateusz.plant.model.Plant;
 import com.squareup.picasso.Picasso;
 
@@ -33,13 +39,15 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 
-public class PlantActivity extends AppCompatActivity implements PlantInterface, SensorEventListener {
+public class PlantActivity extends MyActivity implements PlantInterface, SensorEventListener {
 
     private TextView plantName;
     private TextView latinName;
     private TextView description;
     private TextView sensorValue;
-
+    private RecyclerView remindsRecycler;
+    private RecyclerView.Adapter myPlantAdapter;
+    private RecyclerView.LayoutManager mLayoutManager;
     public ImageView getPlantPhoto() {
         return plantPhoto;
     }
@@ -70,6 +78,10 @@ public class PlantActivity extends AppCompatActivity implements PlantInterface, 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_plant);
+        Toolbar myToolbar = (Toolbar) findViewById(R.id.include);
+        setSupportActionBar(myToolbar);
+
+
         plantName = (TextView)findViewById(R.id.plantName);
         latinName = (TextView)findViewById(R.id.latinName);
         description = (TextView)findViewById(R.id.description);
@@ -117,6 +129,28 @@ public class PlantActivity extends AppCompatActivity implements PlantInterface, 
         LayoutInflater inflater = getLayoutInflater();
         View dialogLayout = inflater.inflate(R.layout.dialog_picture,null);
         pictureDialog.setView(dialogLayout);
+    }
+
+    @Override
+    public void recyclerInit() {
+        remindsRecycler= (RecyclerView) findViewById(R.id.reminds_recycler);
+        remindsRecycler.setHasFixedSize(false);
+        mLayoutManager = new LinearLayoutManager(this);
+        remindsRecycler.setLayoutManager(mLayoutManager);
+        remindsRecycler.setItemAnimator(new DefaultItemAnimator());
+        remindsRecycler.setAdapter(myPlantAdapter);
+        remindsRecycler.addOnItemTouchListener(new RecyclerTouchListener(this,remindsRecycler, new ClickListener() {
+            @Override
+            public void onClick(View view, int position) {
+
+
+            }
+
+            @Override
+            public void onLongClick(View view, int position) {
+
+            }
+        }));
     }
 
     public void showPictureDialog(String plantName) {

@@ -49,7 +49,7 @@ public class LoginActivity extends AppCompatActivity implements ILoginActivity{
         });
         register = (TextView) findViewById(R.id.lGoToRegister);
         presenter = new LoginPresenter(this);
-//        presenter.tryLogin();
+        presenter.tryLogin();
     }
 
     @Override
@@ -88,7 +88,7 @@ public class LoginActivity extends AppCompatActivity implements ILoginActivity{
     public void navigateToRegisterActivity() {
         Intent intent = new Intent(this, RegisterActivity.class);
         startActivity(intent);
-        finish();
+
 
 
     }

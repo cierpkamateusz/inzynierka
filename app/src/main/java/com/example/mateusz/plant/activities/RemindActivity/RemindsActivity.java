@@ -1,19 +1,20 @@
 package com.example.mateusz.plant.activities.RemindActivity;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
 
 import com.example.mateusz.plant.R;
+import com.example.mateusz.plant.activities.MyActivity;
 import com.example.mateusz.plant.model.Remind;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class RemindsActivity extends AppCompatActivity {
+public class RemindsActivity extends MyActivity {
 
     ExpandableListView expandableListView;
     ExpandableListAdapter expandableListAdapter;
@@ -25,6 +26,9 @@ public class RemindsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reminds);
+        Toolbar myToolbar = (Toolbar) findViewById(R.id.include);
+        setSupportActionBar(myToolbar);
+
         expandableListView = (ExpandableListView) findViewById(R.id.expandableListView);
         presenter = new RemindsPresenter(this);
         Log.d("onCreate","success");

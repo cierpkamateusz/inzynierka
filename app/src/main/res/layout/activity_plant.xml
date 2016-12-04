@@ -1,24 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context="com.example.mateusz.plant.activities.PlantActivity.PlantActivity">
-
-
 
     <include
         layout="@layout/toolbar_main"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/include" />
+
+
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/include">
+        android:id="@+id/scrollView">
+
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content">
+
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
@@ -26,28 +30,6 @@
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
                 android:scaleType="centerCrop"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="Large Text"
-                android:id="@+id/plantName"
-                android:layout_below="@+id/plantPhoto"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:layout_marginLeft="25dp"
-                android:layout_marginStart="25dp" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="Medium Text"
-                android:id="@+id/latinName"
-                android:layout_marginTop="5dp"
-                android:layout_below="@+id/plantName"
-                android:layout_marginLeft="35dp" />
 
             <ImageButton
                 android:layout_width="wrap_content"
@@ -61,17 +43,46 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="15dp"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="Large Text"
+                android:id="@+id/plantName"
+                android:layout_below="@id/plantPhoto" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Medium Text"
+                android:id="@+id/latinName"
+                android:layout_below="@id/plantName" />
+
+            <View style="@style/Divider"
+
+                android:layout_below="@id/latinName"
+                android:id="@+id/view" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:layout_centerInParent="true"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="@string/opis"
+                android:id="@+id/descriptionLabel"
+                android:layout_below="@id/view"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:text="Small Text"
                 android:id="@+id/description"
-                android:layout_marginTop="20dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
-                android:layout_below="@+id/latinName"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentEnd="true" />
+
+                android:layout_below="@id/descriptionLabel"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -79,12 +90,34 @@
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:text="Large Text"
                 android:id="@+id/sensorValue"
-                android:layout_alignBottom="@+id/latinName"
-                android:layout_alignRight="@+id/description"
-                android:layout_alignEnd="@+id/description" />
+                android:layout_alignTop="@+id/plantName"
+                android:layout_alignRight="@+id/view"
+                android:layout_alignEnd="@+id/view" />
+
+            <View style="@style/Divider"
+                android:layout_below="@id/description"
+                android:id="@+id/view2" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:layout_centerInParent="true"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="Przypomnienia"
+                android:id="@+id/remindsLabel"
+                android:layout_below="@id/view2"/>
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/reminds_recycler"
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/remindsLabel" />
+
         </RelativeLayout>
 
     </ScrollView>
 
 
-</RelativeLayout>
+</LinearLayout>
