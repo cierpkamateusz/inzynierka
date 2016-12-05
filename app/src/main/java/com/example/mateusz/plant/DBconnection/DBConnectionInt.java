@@ -26,4 +26,5 @@ public interface DBConnectionInt {
     void register(final String name, final String email, final String password, final OnDownloadFinishedListener<ResponseBody> listener);
 
     void getReminds(OnDownloadFinishedListener<List<Remind>> onDownloadFinishedListener);
+    void getUserPlantReminds(int idUserPlant, final OnDownloadFinishedListener<List<Remind>> onDownloadFinishedListener );
 }

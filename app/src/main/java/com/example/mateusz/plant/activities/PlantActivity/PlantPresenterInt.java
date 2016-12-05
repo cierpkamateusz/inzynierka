@@ -5,4 +5,5 @@ package com.example.mateusz.plant.activities.PlantActivity;
  */
 public interface PlantPresenterInt {
     void loadPicture(String s);
+    void getPlantReminds();
 }

@@ -14,6 +14,7 @@ import com.example.mateusz.plant.DBconnection.DBConnection;
 import com.example.mateusz.plant.DBconnection.OnDownloadFinishedListener;
 import com.example.mateusz.plant.Factory;
 import com.example.mateusz.plant.activities.MainActivity.MainActivity;
+import com.example.mateusz.plant.model.Remind;
 import com.example.mateusz.plant.model.UploadResponse;
 import com.squareup.picasso.Picasso;
 
@@ -21,7 +22,10 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 
 import okhttp3.MediaType;
@@ -36,6 +40,8 @@ public class PlantPresenter implements PlantPresenterInt {
     PlantActivity view;
     DBConnection conn;
     protected Uri fileUri;
+    List<Remind> reminds = null;
+
 
     // LogCat tag
     private static final String TAG = MainActivity.class.getSimpleName();
@@ -53,6 +59,41 @@ public class PlantPresenter implements PlantPresenterInt {
         Log.d("URRRRRRRLLLL", url);
     }
 
+    @Override
+    public void getPlantReminds() {
+        conn.getUserPlantReminds(view.plant.getIdUserPlant(), new OnDownloadFinishedListener<List<Remind>>() {
+            @Override
+            public void onSuccess(List<Remind> arg) {
+                Log.d("getPlantReminds", "success");
+                if(!arg.isEmpty()){
+                    Log.d("PlantName from remind",arg.get(0).getName());
+
+                    view.loadReminds(arg);
+                }
+
+            }
+
+            @Override
+            public void onError() {
+                Log.d("getPlantReminds", "error");
+            }
+        });
+
+    }
+    public HashMap<String,List<Remind>> fillRemindsList(List<Remind> arg) {
+        HashMap<String,List<Remind>> map = new HashMap<String,List<Remind>>();
+        for(Remind remind : arg){
+            String name = String.valueOf(remind.getName());
+            if(!map.containsKey(name)){
+                map.put(name,new ArrayList<Remind>());
+                map.get(name).add(remind);
+            }
+            else{
+                map.get(name).add(remind);
+            }
+        }
+        return map;
+    }
     public boolean isDeviceSupportCamera() {
         if (view.getApplicationContext().getPackageManager().hasSystemFeature(
                 PackageManager.FEATURE_CAMERA)) {

@@ -175,7 +175,7 @@ public class DBConnection implements DBConnectionInt{
         call.enqueue(new Callback<User>() {
             @Override
             public void onResponse(Call<User> call, Response<User> response) {
-                if(response.body()!=null){
+                if(response.body().getName()!=null){
                     Log.d("Login resp",response.body().getName());
                     listener.onSuccess(response.body());
                     auth = response.body().getApiKey();
@@ -227,6 +227,25 @@ public class DBConnection implements DBConnectionInt{
             }
         });
     }
+
+    @Override
+    public void getUserPlantReminds(int idUserPlant, final OnDownloadFinishedListener<List<Remind>> onDownloadFinishedListener) {
+        Call<List<Remind>> call = api.getUserPlantReminds(idUserPlant);
+        Log.d("getRem","success");
+        call.enqueue(new Callback<List<Remind>>() {
+            @Override
+            public void onResponse(Call<List<Remind>> call, Response<List<Remind>> response) {
+                Log.d("onResponse","success");
+                onDownloadFinishedListener.onSuccess(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<List<Remind>> call, Throwable t) {
+                Log.d("onFailure",t.toString());
+            }
+        });
+    }
+
     public void closeSession() {
         //TODO close session on server
         auth = "";

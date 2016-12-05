@@ -16,6 +16,7 @@ import retrofit2.http.GET;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
+import retrofit2.http.Path;
 
 
 public interface Endpoints {
@@ -39,4 +40,6 @@ public interface Endpoints {
     Call<UploadResponse> upload(@Part MultipartBody.Part file, @Part("idUserPlant") int idUserPlant);
     @GET("user_reminds")
     Call<List<Remind>> getUserReminds();
+    @GET("user_reminds/{id}")
+    Call<List<Remind>> getUserPlantReminds(@Path("id") Integer plantId);
 }

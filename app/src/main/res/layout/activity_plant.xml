@@ -110,10 +110,24 @@
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/reminds_recycler"
-
+                android:layout_margin="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/remindsLabel" />
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/imageButton2"
+                android:layout_below="@+id/reminds_recycler"
+                android:layout_alignRight="@+id/cameraButton"
+                android:layout_alignEnd="@+id/cameraButton"
+                android:src="@android:drawable/ic_menu_add"
+                android:onClick="initDialog"/>
+            <View style="@style/Divider"
+                android:layout_below="@id/imageButton2"
+                android:id="@+id/view3" />
+
+
 
         </RelativeLayout>
 

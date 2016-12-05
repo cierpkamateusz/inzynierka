@@ -7,8 +7,11 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.mateusz.plant.DBconnection.DBConnection;
 import com.example.mateusz.plant.R;
+
 import com.example.mateusz.plant.model.Plant;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -34,6 +37,12 @@ public class MyPlantAdapter extends RecyclerView.Adapter<MyPlantAdapter.ViewHold
         Plant plant = myPlants.get(position);
         holder.plantName.setText(plant.getPlant_name());
         holder.latinName.setText(plant.getLatin_name());
+//        BitmapDownloaderTask task = new BitmapDownloaderTask(holder.healthImg);
+//        task.execute(plant.getImageAdress());
+        Picasso
+                .with(holder.view.getContext())
+                .load(DBConnection.PHOTO_URL + plant.getImageAdress())
+                .into(holder.healthImg);
 //        switch (plant.getHealth())
 //        {
 //            case 1:holder.healthImg.setImageResource(R.drawable.ic_sentiment_satisfied_green_500_24dp);break;
@@ -53,15 +62,18 @@ public class MyPlantAdapter extends RecyclerView.Adapter<MyPlantAdapter.ViewHold
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+        public View view;
         public TextView plantName;
         public TextView latinName;
         public ImageView healthImg;
 
         public ViewHolder(View itemView) {
+
             super(itemView);
+            view = itemView;
             plantName = (TextView) itemView.findViewById(R.id.nazwaRosliny);
             latinName = (TextView)itemView.findViewById(R.id.nazwaLacinska);
-            healthImg = (ImageView) itemView.findViewById(R.id.healthImageView);
+            healthImg = (ImageView) itemView.findViewById(R.id.ImageView);
         }
 
         @Override

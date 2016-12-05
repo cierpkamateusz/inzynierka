@@ -31,6 +31,7 @@ import com.example.mateusz.plant.R;
 import com.example.mateusz.plant.RecyclerTouchListener;
 import com.example.mateusz.plant.activities.MyActivity;
 import com.example.mateusz.plant.model.Plant;
+import com.example.mateusz.plant.model.Remind;
 import com.squareup.picasso.Picasso;
 
 import java.io.BufferedOutputStream;
@@ -38,6 +39,9 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 public class PlantActivity extends MyActivity implements PlantInterface, SensorEventListener {
 
@@ -46,7 +50,7 @@ public class PlantActivity extends MyActivity implements PlantInterface, SensorE
     private TextView description;
     private TextView sensorValue;
     private RecyclerView remindsRecycler;
-    private RecyclerView.Adapter myPlantAdapter;
+    private RecyclerView.Adapter remindsAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     public ImageView getPlantPhoto() {
         return plantPhoto;
@@ -54,7 +58,8 @@ public class PlantActivity extends MyActivity implements PlantInterface, SensorE
 
     private SensorManager sensorManager;
     private Sensor lightSensor;
-
+    HashMap<String, List<Remind>> remindMap;
+    List<String> remindNames;
     private ImageView plantPhoto;
     protected Plant plant;
     AlertDialog pictureDialog;
@@ -111,7 +116,7 @@ public class PlantActivity extends MyActivity implements PlantInterface, SensorE
         });
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         lightSensor = sensorManager.getDefaultSensor(Sensor.TYPE_LIGHT);
-
+        recyclerInit();
     }
 
 
@@ -138,7 +143,7 @@ public class PlantActivity extends MyActivity implements PlantInterface, SensorE
         mLayoutManager = new LinearLayoutManager(this);
         remindsRecycler.setLayoutManager(mLayoutManager);
         remindsRecycler.setItemAnimator(new DefaultItemAnimator());
-        remindsRecycler.setAdapter(myPlantAdapter);
+        remindsRecycler.setAdapter(remindsAdapter);
         remindsRecycler.addOnItemTouchListener(new RecyclerTouchListener(this,remindsRecycler, new ClickListener() {
             @Override
             public void onClick(View view, int position) {
@@ -151,6 +156,16 @@ public class PlantActivity extends MyActivity implements PlantInterface, SensorE
 
             }
         }));
+    }
+
+    @Override
+    public void loadReminds(List<Remind> reminds) {
+        remindMap = presenter.fillRemindsList(reminds);
+        remindNames = new ArrayList<String>(remindMap.keySet());
+        remindsAdapter = new RemindsAdapter(remindNames, remindMap);
+        remindsRecycler.setAdapter(remindsAdapter);
+        remindsRecycler.setVisibility(View.VISIBLE);
+
     }
 
     public void showPictureDialog(String plantName) {
@@ -198,8 +213,8 @@ public class PlantActivity extends MyActivity implements PlantInterface, SensorE
         if (requestCode == CAMERA_CAPTURE_IMAGE_REQUEST_CODE) {
             if (resultCode == RESULT_OK) {
 
-                // successfully captured the image
-                // launching upload activity
+//                 successfully captured the image
+//                 launching upload activity
 //                launchUploadActivity(true);
                 try {
                     Bitmap bitmap = presenter.handleSamplingAndRotationBitmap(getApplicationContext(),presenter.fileUri);
@@ -228,6 +243,8 @@ public class PlantActivity extends MyActivity implements PlantInterface, SensorE
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
+//                BitmapRotatorTask task = new BitmapRotatorTask(this);
+//                task.execute(presenter.fileUri);
                 presenter.uploadFileToServer();
 
             } else if (resultCode == RESULT_CANCELED) {
@@ -320,12 +337,38 @@ public class PlantActivity extends MyActivity implements PlantInterface, SensorE
         presenter.loadPicture(DBConnection.PHOTO_URL+plant.getImageAdress());
         pictureDialogInit();
         sensorManager.registerListener(this, lightSensor, SensorManager.SENSOR_DELAY_NORMAL);
-
+        presenter.getPlantReminds();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
         sensorManager.unregisterListener(this);
+
     }
+
+
+
+    public void initDialog(View view){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+        builder.setPositiveButton("Dodaj", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                // User clicked OK button
+            }
+        });
+        builder.setNegativeButton("Anuluj", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                // User cancelled the dialog
+            }
+        });
+
+        AlertDialog dialog = builder.create();
+        LayoutInflater inflater = getLayoutInflater();
+        View dialogLayout = inflater.inflate(R.layout.dialog_picture,null);
+        dialog.setView(dialogLayout);
+        dialog.setTitle("Nowe przypomnienie");
+        dialog.show();
+    }
+
 }
