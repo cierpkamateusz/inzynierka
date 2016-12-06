@@ -23,15 +23,16 @@
         </activity>
         <activity
             android:name=".activities.MyPlantsActivity.MyPlantsActivity"
-            android:parentActivityName="com.example.mateusz.plant.activities.MainActivity.MainActivity" >
+            android:parentActivityName=".activities.MainActivity.MainActivity">
 
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.mateusz.plant.activities.MainActivity.MainActivity" />
         </activity>
-        <activity android:name=".activities.PlantActivity.PlantActivity"
-            android:parentActivityName="com.example.mateusz.plant.activities.MyPlantsActivity.MyPlantsActivity" >
+        <activity
+            android:name=".activities.PlantActivity.PlantActivity"
+            android:parentActivityName=".activities.MyPlantsActivity.MyPlantsActivity">
 
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
@@ -46,22 +47,28 @@
             </intent-filter>
         </activity>
         <activity android:name=".activities.RegisterActivity.RegisterActivity" />
-        <activity android:name=".activities.AllPlantsActivity.AllPlantsActivity"
-            android:parentActivityName="com.example.mateusz.plant.activities.MyPlantsActivity.MyPlantsActivity" >
+        <activity
+            android:name=".activities.AllPlantsActivity.AllPlantsActivity"
+            android:parentActivityName=".activities.MyPlantsActivity.MyPlantsActivity">
 
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.mateusz.plant.activities.MyPlantsActivity.MyPlantsActivity" />
         </activity>
-        <activity android:name=".activities.RemindActivity.RemindsActivity"
-            android:parentActivityName="com.example.mateusz.plant.activities.MainActivity.MainActivity" >
+        <activity
+            android:name=".activities.RemindActivity.RemindsActivity"
+            android:parentActivityName=".activities.MainActivity.MainActivity">
 
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.mateusz.plant.activities.MainActivity.MainActivity" />
         </activity>
+        <activity
+            android:name=".activities.NewRemindActivity.NewRemindActivity"
+            android:label="@string/title_activity_new_remind"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"></activity>
     </application>
 
 </manifest>

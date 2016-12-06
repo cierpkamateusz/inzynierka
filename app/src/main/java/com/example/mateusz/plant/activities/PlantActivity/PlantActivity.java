@@ -30,6 +30,7 @@ import com.example.mateusz.plant.DBconnection.DBConnection;
 import com.example.mateusz.plant.R;
 import com.example.mateusz.plant.RecyclerTouchListener;
 import com.example.mateusz.plant.activities.MyActivity;
+import com.example.mateusz.plant.activities.NewRemindActivity.NewRemindActivity;
 import com.example.mateusz.plant.model.Plant;
 import com.example.mateusz.plant.model.Remind;
 import com.squareup.picasso.Picasso;
@@ -350,25 +351,27 @@ public class PlantActivity extends MyActivity implements PlantInterface, SensorE
 
 
     public void initDialog(View view){
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-
-        builder.setPositiveButton("Dodaj", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {
-                // User clicked OK button
-            }
-        });
-        builder.setNegativeButton("Anuluj", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {
-                // User cancelled the dialog
-            }
-        });
-
-        AlertDialog dialog = builder.create();
-        LayoutInflater inflater = getLayoutInflater();
-        View dialogLayout = inflater.inflate(R.layout.dialog_picture,null);
-        dialog.setView(dialogLayout);
-        dialog.setTitle("Nowe przypomnienie");
-        dialog.show();
+        Intent intent = new Intent(this, NewRemindActivity.class);
+        startActivity(intent);
+//        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+//
+//        builder.setPositiveButton("Dodaj", new DialogInterface.OnClickListener() {
+//            public void onClick(DialogInterface dialog, int id) {
+//                // User clicked OK button
+//            }
+//        });
+//        builder.setNegativeButton("Anuluj", new DialogInterface.OnClickListener() {
+//            public void onClick(DialogInterface dialog, int id) {
+//                // User cancelled the dialog
+//            }
+//        });
+//
+//        AlertDialog dialog = builder.create();
+//        LayoutInflater inflater = getLayoutInflater();
+//        View dialogLayout = inflater.inflate(R.layout.dialog_picture,null);
+//        dialog.setView(dialogLayout);
+//        dialog.setTitle("Nowe przypomnienie");
+//        dialog.show();
     }
 
 }

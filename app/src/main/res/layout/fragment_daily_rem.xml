@@ -1,0 +1,96 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.mateusz.plant.activities.MainActivity.DailyRemFragment">
+    <Spinner
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/spinner"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_margin="10dp"/>
+
+<LinearLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:layout_centerHorizontal="true"
+    android:layout_centerVertical="true"
+    android:id="@+id/linearLayout"
+    >
+    <CheckBox
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Poniedziałek"
+        android:id="@+id/checkBox"
+        android:textSize="20sp"
+        android:layout_margin="3dp"
+        android:onClick="onCheckBoxClick"
+         />
+
+    <CheckBox
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Wtorek"
+        android:id="@+id/checkBox2"
+        android:textSize="20sp"
+        android:layout_margin="3dp"
+         />
+
+    <CheckBox
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Środa"
+        android:id="@+id/checkBox3"
+        android:textSize="20sp"
+        android:layout_margin="3dp"
+         />
+
+    <CheckBox
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Czwartek"
+        android:id="@+id/checkBox4"
+        android:textSize="20sp"
+        android:layout_margin="3dp"
+         />
+
+    <CheckBox
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Piątek"
+        android:id="@+id/checkBox5"
+        android:textSize="20sp"
+        android:layout_margin="3dp"
+         />
+
+    <CheckBox
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Sobota"
+        android:id="@+id/checkBox6"
+        android:textSize="20sp"
+        android:layout_margin="3dp"/>
+
+    <CheckBox
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Niedziela"
+        android:id="@+id/checkBox7"
+        android:textSize="20sp"
+        android:layout_margin="3dp"/>
+
+</LinearLayout>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Dodaj"
+        android:id="@+id/button"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="50dp"
+        android:layout_centerHorizontal="true" />
+
+</RelativeLayout>
