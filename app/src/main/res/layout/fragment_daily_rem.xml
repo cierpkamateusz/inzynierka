@@ -27,7 +27,6 @@
         android:id="@+id/checkBox"
         android:textSize="20sp"
         android:layout_margin="3dp"
-        android:onClick="onCheckBoxClick"
          />
 
     <CheckBox

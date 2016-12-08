@@ -2,9 +2,11 @@ package com.example.mateusz.plant.DBconnection;
 
 import android.util.Log;
 
+import com.example.mateusz.plant.model.ActionType;
 import com.example.mateusz.plant.model.Credentials;
 import com.example.mateusz.plant.model.DataBody;
 import com.example.mateusz.plant.model.Message;
+import com.example.mateusz.plant.model.NewRemind;
 import com.example.mateusz.plant.model.Plants;
 import com.example.mateusz.plant.model.Remind;
 import com.example.mateusz.plant.model.UploadResponse;
@@ -34,8 +36,8 @@ public class DBConnection implements DBConnectionInt{
     private Endpoints api;
 //    public static final String BASE_URL = "http://10.0.2.2/plant_application/v1/";   //For emulator
 //    public static final String PHOTO_URL = "http://10.0.2.2/plant_application/images/";
-    public static final String BASE_URL = "http://192.168.0.103:8081/plant_application/v1/";   //For device
-    public static final String PHOTO_URL = "http://192.168.0.103:8081/plant_application/images/";
+    public static final String BASE_URL = "http://192.168.0.102:8081/plant_application/v1/";   //For device
+    public static final String PHOTO_URL = "http://192.168.0.102:8081/plant_application/images/";
     // File upload url (replace the ip with your server address)
 //    public static final String FILE_UPLOAD_URL = "http://192.168.0.101:8081/plant_application/images/";
     // Directory name to store captured images and videos
@@ -154,6 +156,7 @@ public class DBConnection implements DBConnectionInt{
                                    Response<UploadResponse> response) {
                 Log.v("Upload", "success");
 //                Log.d("Response", response.body().getFile_name());
+
                 Log.d("OOOOOOOOOOOOOOOOOOOOOOO",response.body().getMessage());
                 Log.d("OOOOOOOOOOOOOOOOOOOOOOO",response.body().getFile_path());
 
@@ -246,9 +249,49 @@ public class DBConnection implements DBConnectionInt{
         });
     }
 
+    @Override
+    public void getActions(final OnDownloadFinishedListener<List<ActionType>> onDownloadFinishedListener) {
+
+        Call<List<ActionType>> call = api.getActions();
+        Log.d("getActions", "enqueue");
+        call.enqueue(new Callback<List<ActionType>>() {
+
+            @Override
+            public void onResponse(Call<List<ActionType>> call, Response<List<ActionType>> response) {
+                Log.d("getActions", "onResponse");
+                onDownloadFinishedListener.onSuccess(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<List<ActionType>> call, Throwable t) {
+                Log.d("getActions", "onFailure");
+            }
+        });
+    }
+
+
     public void closeSession() {
         //TODO close session on server
         auth = "";
     }
 
+    public void addNewReminds(int idUserPlant, NewRemind newReminds, OnDownloadFinishedListener<Message> onDownloadFinishedListener) {
+        System.out.println(newReminds.getDate() + newReminds.getType() + String.valueOf(newReminds.getIdUserPlant()) + String.valueOf(newReminds.getIdAction()));
+        Call<Message> call = api.addNewReminds(idUserPlant,newReminds.getIdAction(),newReminds.getDate(),newReminds.getType());
+        call.enqueue(new Callback<Message>() {
+            @Override
+            public void onResponse(Call<Message> call, Response<Message> response) {
+
+                Log.d("addNewReminds", "onResponse");
+                Log.d("addNewReminds", response.body().getMessage());
+                Log.d("addNewReminds", response.message());
+                Log.d("addNewReminds", String.valueOf(response.code()));
+            }
+
+            @Override
+            public void onFailure(Call<Message> call, Throwable t) {
+                Log.d("addNewReminds", "onFailure");
+            }
+        });
+    }
 }

@@ -8,7 +8,7 @@ import com.example.mateusz.plant.Factory;
 import com.example.mateusz.plant.model.Remind;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 /**
@@ -41,10 +41,11 @@ public class RemindsPresenter {
         });
     }
 
-    public HashMap<String,List<Remind>> fillExpandableList(List<Remind> arg) {
-        HashMap<String,List<Remind>> map = new HashMap<String,List<Remind>>();
+    public LinkedHashMap<String,List<Remind>> fillExpandableList(List<Remind> arg) {
+        LinkedHashMap<String,List<Remind>> map = new LinkedHashMap<String,List<Remind>>();
         for(Remind remind : arg){
-            String date = String.valueOf(remind.getDate());
+            String date = remind.getDate();
+            System.out.println(date);
             if(!map.containsKey(date)){
                 map.put(date,new ArrayList<Remind>());
                 map.get(date).add(remind);

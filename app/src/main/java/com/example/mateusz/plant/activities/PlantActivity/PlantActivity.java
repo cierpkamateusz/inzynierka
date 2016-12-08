@@ -352,26 +352,9 @@ public class PlantActivity extends MyActivity implements PlantInterface, SensorE
 
     public void initDialog(View view){
         Intent intent = new Intent(this, NewRemindActivity.class);
-        startActivity(intent);
-//        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-//
-//        builder.setPositiveButton("Dodaj", new DialogInterface.OnClickListener() {
-//            public void onClick(DialogInterface dialog, int id) {
-//                // User clicked OK button
-//            }
-//        });
-//        builder.setNegativeButton("Anuluj", new DialogInterface.OnClickListener() {
-//            public void onClick(DialogInterface dialog, int id) {
-//                // User cancelled the dialog
-//            }
-//        });
-//
-//        AlertDialog dialog = builder.create();
-//        LayoutInflater inflater = getLayoutInflater();
-//        View dialogLayout = inflater.inflate(R.layout.dialog_picture,null);
-//        dialog.setView(dialogLayout);
-//        dialog.setTitle("Nowe przypomnienie");
-//        dialog.show();
+        intent.putExtra("idUserPlant", plant.getIdUserPlant());
+        startActivityForResult(intent, 112);
+
     }
 
 }

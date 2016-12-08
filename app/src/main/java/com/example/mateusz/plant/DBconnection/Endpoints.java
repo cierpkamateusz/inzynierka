@@ -1,5 +1,6 @@
 package com.example.mateusz.plant.DBconnection;
 
+import com.example.mateusz.plant.model.ActionType;
 import com.example.mateusz.plant.model.DataBody;
 import com.example.mateusz.plant.model.Message;
 import com.example.mateusz.plant.model.Plants;
@@ -42,4 +43,9 @@ public interface Endpoints {
     Call<List<Remind>> getUserReminds();
     @GET("user_reminds/{id}")
     Call<List<Remind>> getUserPlantReminds(@Path("id") Integer plantId);
+    @GET("action")
+    Call<List<ActionType>> getActions();
+    @Multipart
+    @POST("user_reminds")
+    Call<Message> addNewReminds(@Part("idUserPlant") int idUserPlant, @Part("idAction") int idAction, @Part("date") String date,@Part("type") String type);
 }

@@ -1,5 +1,6 @@
 package com.example.mateusz.plant.DBconnection;
 
+import com.example.mateusz.plant.model.ActionType;
 import com.example.mateusz.plant.model.DataBody;
 import com.example.mateusz.plant.model.Message;
 import com.example.mateusz.plant.model.Remind;
@@ -27,4 +28,7 @@ public interface DBConnectionInt {
 
     void getReminds(OnDownloadFinishedListener<List<Remind>> onDownloadFinishedListener);
     void getUserPlantReminds(int idUserPlant, final OnDownloadFinishedListener<List<Remind>> onDownloadFinishedListener );
+
+
+    void getActions(OnDownloadFinishedListener<List<ActionType>> onDownloadFinishedListener);
 }

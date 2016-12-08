@@ -41,7 +41,7 @@ public class MyPlantAdapter extends RecyclerView.Adapter<MyPlantAdapter.ViewHold
 //        task.execute(plant.getImageAdress());
         Picasso
                 .with(holder.view.getContext())
-                .load(DBConnection.PHOTO_URL + plant.getImageAdress())
+                .load(DBConnection.PHOTO_URL+ "resized/" + plant.getImageAdress())
                 .into(holder.healthImg);
 //        switch (plant.getHealth())
 //        {

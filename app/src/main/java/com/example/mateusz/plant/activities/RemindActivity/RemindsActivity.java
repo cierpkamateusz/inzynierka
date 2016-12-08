@@ -11,7 +11,7 @@ import com.example.mateusz.plant.activities.MyActivity;
 import com.example.mateusz.plant.model.Remind;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 public class RemindsActivity extends MyActivity {
@@ -19,7 +19,7 @@ public class RemindsActivity extends MyActivity {
     ExpandableListView expandableListView;
     ExpandableListAdapter expandableListAdapter;
     List<String> expandableListTitle;
-    HashMap<String, List<Remind>> expandableListDetail;
+    LinkedHashMap<String, List<Remind>> expandableListDetail;
     RemindsPresenter presenter;
 
     @Override
@@ -35,14 +35,18 @@ public class RemindsActivity extends MyActivity {
         presenter.getReminds();
 
 
+
     }
 
     public void loadReminds(List<Remind> arg) {
+
         Log.d("Remind", String.valueOf(arg.get(0).getName()));
         expandableListDetail = presenter.fillExpandableList(arg);
         expandableListTitle = new ArrayList<String>(expandableListDetail.keySet());
+
         expandableListAdapter = new MyExpandableListAdapter(this, expandableListTitle, expandableListDetail);
         expandableListView.setAdapter(expandableListAdapter);
 
     }
+
 }
