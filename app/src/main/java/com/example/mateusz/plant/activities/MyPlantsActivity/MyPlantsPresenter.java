@@ -34,7 +34,7 @@ public class MyPlantsPresenter implements MyPlantsPresenterInt{
             }
 
             @Override
-            public void onError() {
+            public void onError(Throwable t) {
                 view.showToast("Blad - nie pobrało roslin");
             }
         });

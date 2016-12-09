@@ -34,7 +34,7 @@ public class AllPlantsPresenter implements IAllPlantsPresenter {
             }
 
             @Override
-            public void onError() {
+            public void onError(Throwable t) {
                 view.showToast("Blad - nie pobrało roslin");
             }
         });
@@ -55,7 +55,7 @@ public class AllPlantsPresenter implements IAllPlantsPresenter {
             }
 
             @Override
-            public void onError() {
+            public void onError(Throwable t) {
 
             }
         });

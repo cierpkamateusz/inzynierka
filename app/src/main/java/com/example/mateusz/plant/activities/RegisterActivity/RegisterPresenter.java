@@ -32,7 +32,7 @@ public class RegisterPresenter implements IRegisterPresenter {
             }
 
             @Override
-            public void onError() {
+            public void onError(Throwable t) {
 
             }
         });

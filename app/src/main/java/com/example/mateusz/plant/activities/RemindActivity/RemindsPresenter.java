@@ -34,7 +34,7 @@ public class RemindsPresenter {
             }
 
             @Override
-            public void onError() {
+            public void onError(Throwable t) {
                 Log.d("onSuccess","error");
 
             }

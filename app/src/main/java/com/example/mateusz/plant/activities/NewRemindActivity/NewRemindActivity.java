@@ -91,7 +91,7 @@ public class NewRemindActivity extends MyActivity {
             }
 
             @Override
-            public void onError() {
+            public void onError(Throwable t) {
                 Log.d("onSuccess", "EEEEEEEEEEE");
             }
         });
@@ -318,7 +318,7 @@ public class NewRemindActivity extends MyActivity {
                     }
 
                     @Override
-                    public void onError() {
+                    public void onError(Throwable t) {
 
                     }
                 });

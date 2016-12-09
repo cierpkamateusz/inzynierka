@@ -74,7 +74,7 @@ public class PlantPresenter implements PlantPresenterInt {
             }
 
             @Override
-            public void onError() {
+            public void onError(Throwable t) {
                 Log.d("getPlantReminds", "error");
             }
         });
@@ -115,7 +115,7 @@ public class PlantPresenter implements PlantPresenterInt {
 
         // create RequestBody instance from file
         RequestBody requestFile =
-                RequestBody.create(MediaType.parse("multipart/form-data"), file);
+                RequestBody.create(MediaType.parse("image/jpeg"), file);
 
         // MultipartBody.Part is used to send also the actual file name
         MultipartBody.Part body =
@@ -141,7 +141,7 @@ public class PlantPresenter implements PlantPresenterInt {
             }
 
             @Override
-            public void onError() {
+            public void onError(Throwable t) {
 
             }
         });

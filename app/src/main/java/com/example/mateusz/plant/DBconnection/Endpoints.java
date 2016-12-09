@@ -13,6 +13,7 @@ import java.util.List;
 import okhttp3.MultipartBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
@@ -48,4 +49,6 @@ public interface Endpoints {
     @Multipart
     @POST("user_reminds")
     Call<Message> addNewReminds(@Part("idUserPlant") int idUserPlant, @Part("idAction") int idAction, @Part("date") String date,@Part("type") String type);
+    @DELETE("user_reminds/{id}")
+    Call<Message> deleteRemind(@Path("id") Integer idUserPlant);
 }

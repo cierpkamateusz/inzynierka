@@ -89,7 +89,7 @@ public class MyExpandableListAdapter extends BaseExpandableListAdapter {
 
         TextView expandedListLatinName = (TextView) convertView
                 .findViewById(R.id.latinName);
-        expandedListPlantName.setText(expandedListRemind.getLatinName());
+        expandedListLatinName.setText(expandedListRemind.getLatinName());
         return convertView;
     }
 

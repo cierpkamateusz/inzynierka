@@ -6,5 +6,5 @@ package com.example.mateusz.plant.DBconnection;
 public interface OnRequestListener<E>  {
 
     void onSuccess(E arg);
-    void onError();
+    void onError(Throwable t);
 }

@@ -6,6 +6,6 @@ package com.example.mateusz.plant.DBconnection;
 public interface OnDownloadFinishedListener<E> {
 
     void onSuccess(E arg);
-    void onError();
+    void onError(Throwable t);
 
 }

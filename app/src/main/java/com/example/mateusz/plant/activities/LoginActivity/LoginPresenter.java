@@ -38,7 +38,8 @@ public class LoginPresenter implements ILoginPresenter {
             }
 
             @Override
-            public void onError() {
+            public void onError(Throwable t) {
+                Log.d("onClickLogin", t.getMessage());
                 Log.d("onClickLogin","error");
             }
         });
@@ -72,7 +73,7 @@ public class LoginPresenter implements ILoginPresenter {
                 }
 
                 @Override
-                public void onError() {
+                public void onError(Throwable t) {
 
                 }
             });
