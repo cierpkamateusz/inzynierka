@@ -1,11 +1,13 @@
 package com.example.mateusz.plant.activities.PlantActivity;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.Typeface;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -20,6 +22,8 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -50,6 +54,9 @@ public class PlantActivity extends MyActivity implements PlantInterface, SensorE
     private TextView latinName;
     private TextView description;
     private TextView sensorValue;
+    private TextView labelDescription;
+    private TextView labelReminds;
+    private EditText location;
     private RecyclerView remindsRecycler;
     private RecyclerView.Adapter remindsAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
@@ -66,6 +73,7 @@ public class PlantActivity extends MyActivity implements PlantInterface, SensorE
     AlertDialog pictureDialog;
     private ImageView imageView;
     private ImageButton cameraButton;
+
     // Activity request codes
     public static final int CAMERA_CAPTURE_IMAGE_REQUEST_CODE = 100;
     public static final int CAMERA_CAPTURE_VIDEO_REQUEST_CODE = 200;
@@ -86,12 +94,29 @@ public class PlantActivity extends MyActivity implements PlantInterface, SensorE
         setContentView(R.layout.activity_plant);
         Toolbar myToolbar = (Toolbar) findViewById(R.id.include);
         setSupportActionBar(myToolbar);
-
-
+        Typeface type = Typeface.createFromAsset(getAssets(),"fonts/Comfortaa Thin.ttf");
+        Typeface typeBold = Typeface.createFromAsset(getAssets(),"fonts/Comfortaa Bold.ttf");
+        labelDescription = (TextView)findViewById(R.id.descriptionLabel);
+        labelDescription.setTypeface(type);
+        labelReminds = (TextView)findViewById(R.id.remindsLabel);
+        labelReminds.setTypeface(type);
         plantName = (TextView)findViewById(R.id.plantName);
+        plantName.setTypeface(typeBold);
         latinName = (TextView)findViewById(R.id.latinName);
+        latinName.setTypeface(type);
         description = (TextView)findViewById(R.id.description);
+        description.setTypeface(type);
+        location = (EditText)findViewById(R.id.location);
+        location.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (!hasFocus) {
+                    hideKeyboard(v);
+                }
+            }
+        });
+        location.setTypeface(type);
         sensorValue = (TextView)findViewById(R.id.sensorValue);
+        sensorValue.setTypeface(typeBold);
         presenter = new PlantPresenter(this);
         Intent intent = getIntent();
         plant = (Plant)intent.getSerializableExtra("Plant");
@@ -355,6 +380,10 @@ public class PlantActivity extends MyActivity implements PlantInterface, SensorE
         intent.putExtra("idUserPlant", plant.getIdUserPlant());
         startActivityForResult(intent, 112);
 
+    }
+    public void hideKeyboard(View view) {
+        InputMethodManager inputMethodManager =(InputMethodManager)getSystemService(Activity.INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 
 }

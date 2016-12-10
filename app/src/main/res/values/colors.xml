@@ -3,11 +3,13 @@
     <color name="colorPrimary">#ffffff</color>
     <color name="colorPrimaryDark">#000000</color>
     <color name="colorAccent">#ffffff</color>
-    <color name="primaryGreen">#ffffff</color>
-    <color name="secondaryGreen">#ffffff</color>
-    <color name="darkGreen">#dfdfdf</color>
-    <color name="primaryDarkGray">#696b6a</color>
-    <color name="secondaryDarkGray">#888988</color>
+    <color name="primaryGreen">#6eec87</color>
+    <color name="secondaryGreen">#ad5bbe55</color>
+    <color name="darkGreen">#333333</color>
+    <color name="primaryDarkGray">#101010</color>
+    <color name="secondaryDarkGray">#18211a</color>
     <color name="primaryBrightGray">#f4f3f1</color>
     <color name="secondaryBrightGray">#dfdedd</color>
+    <color name="textBright">#ffffff</color>
+    <color name="textDark">#080808</color>
 </resources>

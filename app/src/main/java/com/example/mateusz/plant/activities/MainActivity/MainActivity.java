@@ -1,6 +1,7 @@
 package com.example.mateusz.plant.activities.MainActivity;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -16,6 +17,7 @@ import com.example.mateusz.plant.model.User;
 public class MainActivity extends MyActivity implements IMainActivity {
 
     private Button bGoToMyPlantsActivity;
+    private Button bGoToRemindsActivity;
     private User user;
     private TextView name;
     @Override
@@ -29,8 +31,13 @@ public class MainActivity extends MyActivity implements IMainActivity {
         name = (TextView)findViewById(R.id.nameText);
         user = (User) getIntent().getSerializableExtra("User");
         name.setText("Witaj \n" + user.getName());
+        Typeface type = Typeface.createFromAsset(getAssets(),"fonts/Comfortaa Thin.ttf");
+        name.setTypeface(type);
 
-
+        bGoToMyPlantsActivity = (Button)findViewById(R.id.goToMyPlants);
+        bGoToMyPlantsActivity.setTypeface(type);
+        bGoToRemindsActivity = (Button)findViewById(R.id.goToMyReminds);
+        bGoToRemindsActivity.setTypeface(type);
 
 
 

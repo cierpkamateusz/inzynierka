@@ -1,5 +1,6 @@
 package com.example.mateusz.plant.activities.MyPlantsActivity;
 
+import android.graphics.Typeface;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,7 +10,6 @@ import android.widget.TextView;
 
 import com.example.mateusz.plant.DBconnection.DBConnection;
 import com.example.mateusz.plant.R;
-
 import com.example.mateusz.plant.model.Plant;
 import com.squareup.picasso.Picasso;
 
@@ -35,8 +35,10 @@ public class MyPlantAdapter extends RecyclerView.Adapter<MyPlantAdapter.ViewHold
     @Override
     public void onBindViewHolder(MyPlantAdapter.ViewHolder holder, int position) {
         Plant plant = myPlants.get(position);
+
         holder.plantName.setText(plant.getPlant_name());
         holder.latinName.setText(plant.getLatin_name());
+        holder.location.setText(plant.getLocation());
 //        BitmapDownloaderTask task = new BitmapDownloaderTask(holder.healthImg);
 //        task.execute(plant.getImageAdress());
         Picasso
@@ -65,15 +67,23 @@ public class MyPlantAdapter extends RecyclerView.Adapter<MyPlantAdapter.ViewHold
         public View view;
         public TextView plantName;
         public TextView latinName;
+        public TextView location;
         public ImageView healthImg;
+
 
         public ViewHolder(View itemView) {
 
             super(itemView);
+            Typeface type = Typeface.createFromAsset(itemView.getContext().getAssets(),"fonts/Comfortaa Thin.ttf");
+            Typeface typeBold = Typeface.createFromAsset(itemView.getContext().getAssets(),"fonts/Comfortaa Thin.ttf");
             view = itemView;
             plantName = (TextView) itemView.findViewById(R.id.nazwaRosliny);
+            plantName.setTypeface(typeBold);
             latinName = (TextView)itemView.findViewById(R.id.nazwaLacinska);
+            latinName.setTypeface(type);
             healthImg = (ImageView) itemView.findViewById(R.id.ImageView);
+            location = (TextView) itemView.findViewById(R.id.location);
+            location.setTypeface(type);
         }
 
         @Override

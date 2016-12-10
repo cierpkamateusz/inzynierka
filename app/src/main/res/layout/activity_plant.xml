@@ -4,7 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.example.mateusz.plant.activities.PlantActivity.PlantActivity">
+    tools:context="com.example.mateusz.plant.activities.PlantActivity.PlantActivity"
+    android:background="@drawable/background">
 
     <include
         layout="@layout/toolbar_main"
@@ -21,7 +22,9 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:focusable="true"
+            android:focusableInTouchMode="true">
 
             <ImageView
                 android:layout_width="match_parent"
@@ -48,7 +51,8 @@
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:text="Large Text"
                 android:id="@+id/plantName"
-                android:layout_below="@id/plantPhoto" />
+                android:layout_below="@id/plantPhoto"
+                android:textColor="@color/textBright" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -58,12 +62,38 @@
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="Medium Text"
                 android:id="@+id/latinName"
-                android:layout_below="@id/plantName" />
+                android:layout_below="@id/plantName"
+                android:layout_marginBottom="5dp"
+                android:textColor="@color/textBright"/>
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="textPersonName"
+                android:text="Lokalizacja"
+                android:id="@+id/location"
+                android:maxLength="20"
+                android:layout_below="@+id/latinName"
+                android:layout_marginLeft="10dp"
+                android:textColor="@color/textBright"/>
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/imageButton3"
+
+                android:src="@drawable/ic_edit_black_18dp"
+                android:background="@android:color/transparent"
+                android:layout_alignTop="@+id/location"
+                android:layout_toRightOf="@+id/location"
+                android:layout_toEndOf="@+id/location" />
 
             <View style="@style/Divider"
 
-                android:layout_below="@id/latinName"
-                android:id="@+id/view" />
+                android:id="@+id/view"
+                android:layout_below="@+id/location"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true" />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -72,7 +102,8 @@
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:text="@string/opis"
                 android:id="@+id/descriptionLabel"
-                android:layout_below="@id/view"/>
+                android:layout_below="@id/view"
+                android:textColor="@color/textBright"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -81,8 +112,10 @@
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:text="Small Text"
                 android:id="@+id/description"
-
-                android:layout_below="@id/descriptionLabel"/>
+                android:textColor="@color/textBright"
+                android:layout_below="@id/descriptionLabel"
+                android:background="@color/secondaryDarkGray"
+                android:alpha="0.7" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -92,7 +125,8 @@
                 android:id="@+id/sensorValue"
                 android:layout_alignTop="@+id/plantName"
                 android:layout_alignRight="@+id/view"
-                android:layout_alignEnd="@+id/view" />
+                android:layout_alignEnd="@+id/view"
+                android:textColor="@color/textBright"/>
 
             <View style="@style/Divider"
                 android:layout_below="@id/description"
@@ -106,7 +140,8 @@
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:text="Przypomnienia"
                 android:id="@+id/remindsLabel"
-                android:layout_below="@id/view2"/>
+                android:layout_below="@id/view2"
+                android:textColor="@color/textBright"/>
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/reminds_recycler"
@@ -126,6 +161,9 @@
             <View style="@style/Divider"
                 android:layout_below="@id/imageButton2"
                 android:id="@+id/view3" />
+
+
+
 
 
 

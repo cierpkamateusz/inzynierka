@@ -1,8 +1,10 @@
 package com.example.mateusz.plant.activities.RemindActivity;
 
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.View;
 import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
 
@@ -30,6 +32,12 @@ public class RemindsActivity extends MyActivity {
         setSupportActionBar(myToolbar);
 
         expandableListView = (ExpandableListView) findViewById(R.id.expandableListView);
+        expandableListView.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
+            @Override
+            public boolean onGroupClick(ExpandableListView list, View v, int groupPosition, long id) {
+                return  list.isGroupExpanded(groupPosition) ? list.collapseGroup(groupPosition) : list.expandGroup(groupPosition);
+            }
+        });
         presenter = new RemindsPresenter(this);
         Log.d("onCreate","success");
         presenter.getReminds();
@@ -43,9 +51,11 @@ public class RemindsActivity extends MyActivity {
         Log.d("Remind", String.valueOf(arg.get(0).getName()));
         expandableListDetail = presenter.fillExpandableList(arg);
         expandableListTitle = new ArrayList<String>(expandableListDetail.keySet());
-
-        expandableListAdapter = new MyExpandableListAdapter(this, expandableListTitle, expandableListDetail);
+        Typeface type = Typeface.createFromAsset(getAssets(),"fonts/Comfortaa Thin.ttf");
+        Typeface typeBold = Typeface.createFromAsset(getAssets(),"fonts/Comfortaa Bold.ttf");
+        expandableListAdapter = new MyExpandableListAdapter(type,typeBold,this, expandableListTitle, expandableListDetail);
         expandableListView.setAdapter(expandableListAdapter);
+        expandableListView.expandGroup(0);
 
     }
 

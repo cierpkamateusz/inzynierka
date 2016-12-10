@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -25,13 +26,24 @@ public class LoginActivity extends AppCompatActivity implements ILoginActivity{
     private EditText passText;
     private Button loginButton;
     private TextView register;
+    private TextView loginLabel;
+    private TextView question;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        loginLabel = (TextView)findViewById(R.id.loginLabel);
+        Typeface type = Typeface.createFromAsset(getAssets(),"fonts/Comfortaa Thin.ttf");
+        Typeface typeBold = Typeface.createFromAsset(getAssets(),"fonts/Comfortaa Bold.ttf");
+        loginLabel.setTypeface(type);
         emailText = (EditText)findViewById(R.id.emailText);
+        emailText.setTypeface(type);
         passText = (EditText)findViewById(R.id.passwordText);
+        passText.setTypeface(type);
         loginButton = (Button)findViewById(R.id.loginButton);
+        loginButton.setTypeface(typeBold);
+        question = (TextView) findViewById(R.id.lRegisterText);
+        question.setTypeface(type);
         emailText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             public void onFocusChange(View v, boolean hasFocus) {
                 if (!hasFocus) {
@@ -48,6 +60,7 @@ public class LoginActivity extends AppCompatActivity implements ILoginActivity{
             }
         });
         register = (TextView) findViewById(R.id.lGoToRegister);
+        register.setTypeface(typeBold);
         presenter = new LoginPresenter(this);
         presenter.tryLogin();
     }

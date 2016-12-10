@@ -4,37 +4,39 @@
     android:layout_height="match_parent"
     tools:context="com.example.mateusz.plant.activities.MainActivity.DailyRemFragment">
     <Spinner
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="200dp"
+        android:layout_height="40dp"
         android:id="@+id/spinner"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_margin="10dp"/>
+
+        android:layout_margin="10dp"
+        android:background="@color/textBright"
+        android:alpha="0.7"
+        android:layout_centerHorizontal="true" />
 
 <LinearLayout
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:layout_centerHorizontal="true"
-    android:layout_centerVertical="true"
     android:id="@+id/linearLayout"
-    >
+    android:background="@color/textBright"
+    android:alpha="0.7"
+    android:layout_marginTop="26dp"
+    android:layout_below="@+id/spinner"
+    android:layout_alignParentLeft="true"
+    android:layout_alignParentStart="true">
     <CheckBox
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Poniedziałek"
         android:id="@+id/checkBox"
-        android:textSize="20sp"
-        android:layout_margin="3dp"
-         />
+
+        android:layout_margin="3dp" />
 
     <CheckBox
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Wtorek"
         android:id="@+id/checkBox2"
-        android:textSize="20sp"
         android:layout_margin="3dp"
          />
 
@@ -43,7 +45,6 @@
         android:layout_height="wrap_content"
         android:text="Środa"
         android:id="@+id/checkBox3"
-        android:textSize="20sp"
         android:layout_margin="3dp"
          />
 
@@ -52,7 +53,6 @@
         android:layout_height="wrap_content"
         android:text="Czwartek"
         android:id="@+id/checkBox4"
-        android:textSize="20sp"
         android:layout_margin="3dp"
          />
 
@@ -61,7 +61,6 @@
         android:layout_height="wrap_content"
         android:text="Piątek"
         android:id="@+id/checkBox5"
-        android:textSize="20sp"
         android:layout_margin="3dp"
          />
 
@@ -70,7 +69,6 @@
         android:layout_height="wrap_content"
         android:text="Sobota"
         android:id="@+id/checkBox6"
-        android:textSize="20sp"
         android:layout_margin="3dp"/>
 
     <CheckBox
@@ -78,7 +76,6 @@
         android:layout_height="wrap_content"
         android:text="Niedziela"
         android:id="@+id/checkBox7"
-        android:textSize="20sp"
         android:layout_margin="3dp"/>
 
 </LinearLayout>

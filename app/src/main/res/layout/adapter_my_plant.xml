@@ -8,7 +8,9 @@
     android:layout_marginRight="4dp"
     android:layout_marginBottom="2dp"
     android:layout_marginTop="2dp"
-    android:background="@color/abc_search_url_text_normal">
+    android:background="@color/abc_search_url_text_normal"
+    android:alpha="0.7"
+    >
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -21,7 +23,8 @@
         android:paddingRight="10dp"
         android:paddingTop="5dp"
         android:paddingBottom="5dp"
-        android:transitionGroup="false">
+        android:transitionGroup="false"
+        >
 
 
         <TextView
@@ -32,10 +35,10 @@
             android:id="@+id/nazwaRosliny"
             android:textColor="@color/primaryDarkGray"
             android:textStyle="bold"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:textSize="15dp" />
+            android:textSize="15dp"
+            android:layout_above="@+id/nazwaLacinska"
+            android:layout_alignLeft="@+id/nazwaLacinska"
+            android:layout_marginBottom="2dp" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -45,20 +48,46 @@
             android:id="@+id/nazwaLacinska"
             android:textStyle="italic"
             android:textColor="@color/primaryDarkGray"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:textSize="12dp" />
+            android:textSize="12dp"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/ImageView"
+            android:layout_toEndOf="@+id/ImageView"
+            android:layout_margin="5dp" />
 
         <ImageView
             android:layout_width="70dp"
             android:layout_height="wrap_content"
             android:id="@+id/ImageView"
+            android:scaleType="centerCrop"
             android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentBottom="true"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Medium Text"
+            android:id="@+id/location"
+
+            android:textColor="@color/primaryDarkGray"
+            android:textSize="12dp"
+            android:layout_below="@+id/nazwaLacinska"
+            android:layout_alignLeft="@+id/nazwaLacinska"
+            android:layout_marginTop="2dp" />
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/imageDone"
+            android:layout_centerVertical="true"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
-            android:layout_alignParentBottom="true"
-            android:scaleType="centerCrop"/>
+            android:src="@drawable/ic_done_black_24dp"
+
+            android:visibility="gone" />
 
     </RelativeLayout>
 </android.support.v7.widget.CardView>
