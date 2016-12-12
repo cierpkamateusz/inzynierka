@@ -20,7 +20,7 @@ import com.example.mateusz.plant.activities.LoginActivity.LoginActivity;
 
 public abstract class MyActivity extends AppCompatActivity {
 
-    AlertDialog alertDialog;
+    public AlertDialog alertDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

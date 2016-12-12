@@ -7,6 +7,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -24,7 +25,7 @@ import com.example.mateusz.plant.model.Plants;
 public class MyPlantsActivity extends MyActivity implements IMyPlants {
 
     private RecyclerView myPlantsRecycler;
-    private RecyclerView.Adapter myPlantAdapter;
+    private MyPlantAdapter myPlantAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     private MyPlantsPresenter presenter;
     private ProgressBar progressBar;
@@ -46,8 +47,10 @@ public class MyPlantsActivity extends MyActivity implements IMyPlants {
         myPlantsRecycler.addOnItemTouchListener(new RecyclerTouchListener(this, myPlantsRecycler, new ClickListener() {
             @Override
             public void onClick(View view, int position) {
+                if(view instanceof ImageButton){
 
-                presenter.onClickPlant(position);
+                }
+                else presenter.onClickPlant(position);
 
             }
 

@@ -28,9 +28,9 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Nie masz roslin"
         android:id="@+id/textEmptyView"
-        android:layout_below="@+id/my_plants_progressBar"
-        android:layout_centerHorizontal="true"
-        android:textColor="@color/textBright" />
+        android:textColor="@color/textBright"
+        android:layout_alignBottom="@+id/my_plants_progressBar"
+        android:layout_centerHorizontal="true" />
     <include
         layout="@layout/toolbar_main"
         android:layout_width="match_parent"
@@ -41,10 +41,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/imageButton"
-        android:src="@drawable/ic_add_circle_indigo_a100_48dp"
+        android:src="@drawable/ic_add_box_black_36dp"
         android:adjustViewBounds="false"
         android:cropToPadding="false"
-        android:background="@null"
+
         android:onClick="onClickAddPlant"
         android:nestedScrollingEnabled="true"
         android:layout_alignParentBottom="true"

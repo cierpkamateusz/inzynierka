@@ -15,8 +15,10 @@ import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.DELETE;
 import retrofit2.http.GET;
+import retrofit2.http.Headers;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Part;
 import retrofit2.http.Path;
 
@@ -51,4 +53,10 @@ public interface Endpoints {
     Call<Message> addNewReminds(@Part("idUserPlant") int idUserPlant, @Part("idAction") int idAction, @Part("date") String date,@Part("type") String type);
     @DELETE("user_reminds/{id}")
     Call<Message> deleteRemind(@Path("id") Integer idUserPlant);
+    @Multipart
+    @Headers("Content-Type: application/x-www-form-urlencoded")
+    @PUT("user_reminds")
+    Call<Message> updateRemind(@Part("date") String date, @Part("idRemind") Integer idRemind);
+    @DELETE("user_plants/{id}")
+    Call<Message> deleteUserPlant(@Path("id") Integer idUserPlant);
 }

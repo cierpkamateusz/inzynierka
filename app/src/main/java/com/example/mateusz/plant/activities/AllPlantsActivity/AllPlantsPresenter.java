@@ -1,5 +1,8 @@
 package com.example.mateusz.plant.activities.AllPlantsActivity;
 
+import android.content.DialogInterface;
+import android.support.v7.app.AlertDialog;
+
 import com.example.mateusz.plant.DBconnection.DBConnection;
 import com.example.mateusz.plant.DBconnection.OnDownloadFinishedListener;
 import com.example.mateusz.plant.Factory;
@@ -15,10 +18,13 @@ public class AllPlantsPresenter implements IAllPlantsPresenter {
     private DBConnection conn;
     private AllPlantsActivity view;
     private Plants plants;
+    private AlertDialog.Builder builder;
+    AlertDialog pictureDialog;
 
     public AllPlantsPresenter(AllPlantsActivity view) {
         this.view = view;
         this.conn = Factory.getApiConnection();
+        this.builder = new AlertDialog.Builder(view);
     }
 
     @Override
@@ -42,8 +48,24 @@ public class AllPlantsPresenter implements IAllPlantsPresenter {
 
     @Override
     public void onClickPlant(int position) {
-        Plant plant = plants.getPlants().get(position);
-        addUserPlant(plant.getIdPlant());
+        final Plant plant = plants.getPlants().get(position);
+        builder.setMessage("Czy chcesz dodać nową roślinę do Twojej kolekcji?").setTitle("Uwaga");
+        builder.setPositiveButton("Tak", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                addUserPlant(plant.getIdPlant());
+            }
+        });
+        builder.setNegativeButton("Nie", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
+
 
     }
 

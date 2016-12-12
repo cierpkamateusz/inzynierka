@@ -1,12 +1,15 @@
 package com.example.mateusz.plant.activities.AllPlantsActivity;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ProgressBar;
+import android.widget.SearchView;
 import android.widget.TextView;
 
 import com.example.mateusz.plant.ClickListener;
@@ -18,15 +21,38 @@ import com.example.mateusz.plant.model.Plants;
 
 public class AllPlantsActivity extends AppCompatActivity implements IAllPlantsActivity{
     private RecyclerView plantsRecycler;
-    private RecyclerView.Adapter plantAdapter;
+    private MyPlantAdapter plantAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     private ProgressBar progressBar;
     private TextView textEmptyView;
+    private SearchView searchView;
     AllPlantsPresenter presenter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_all_plants);
+        searchView = (SearchView) findViewById(R.id.searchView);
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                plantAdapter.filter(query);
+                searchView.clearFocus();
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                plantAdapter.filter(newText);
+                return true;
+            }
+        });
+        searchView.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (!hasFocus) {
+                    hideKeyboard(v);
+                }
+            }
+        });
         plantsRecycler = (RecyclerView) findViewById(R.id.all_plants_recycler);
         plantsRecycler.setHasFixedSize(false);
         mLayoutManager = new LinearLayoutManager(this);
@@ -91,5 +117,9 @@ public class AllPlantsActivity extends AppCompatActivity implements IAllPlantsAc
     @Override
     public void goToPlantActivity(Plant plant) {
 
+    }
+    public void hideKeyboard(View view) {
+        InputMethodManager inputMethodManager =(InputMethodManager)getSystemService(Activity.INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 }

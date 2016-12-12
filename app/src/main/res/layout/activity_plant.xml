@@ -32,7 +32,13 @@
                 android:id="@+id/plantPhoto"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
-                android:scaleType="centerCrop"/>
+                android:scaleType="centerCrop"
+                android:background="@color/secondaryDarkGray"
+                android:paddingBottom="3dp"
+                android:paddingTop="3dp"
+                android:layout_marginBottom="3dp"
+                android:paddingLeft="3dp"
+                android:paddingRight="3dp" />
 
             <ImageButton
                 android:layout_width="wrap_content"
@@ -42,7 +48,11 @@
                 android:layout_alignParentRight="true"
                 android:layout_alignParentEnd="true"
                 android:src="@drawable/ic_camera_alt_black_36dp" />
-
+            <View style="@style/Divider"
+                android:layout_below="@id/plantPhoto"
+                android:id="@+id/view5"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -51,7 +61,7 @@
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:text="Large Text"
                 android:id="@+id/plantName"
-                android:layout_below="@id/plantPhoto"
+                android:layout_below="@id/view5"
                 android:textColor="@color/textBright" />
 
             <TextView
@@ -92,6 +102,8 @@
 
                 android:id="@+id/view"
                 android:layout_below="@+id/location"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true" />
             <TextView
@@ -123,14 +135,16 @@
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:text="Large Text"
                 android:id="@+id/sensorValue"
-                android:layout_alignTop="@+id/plantName"
-                android:layout_alignRight="@+id/view"
-                android:layout_alignEnd="@+id/view"
-                android:textColor="@color/textBright"/>
+                android:textColor="@color/textBright"
+                android:layout_below="@+id/latinName"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true" />
 
             <View style="@style/Divider"
                 android:layout_below="@id/description"
-                android:id="@+id/view2" />
+                android:id="@+id/view2"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -145,26 +159,44 @@
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/reminds_recycler"
+
                 android:layout_margin="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/remindsLabel" />
+                android:layout_below="@+id/imageButton2" />
             <ImageButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/imageButton2"
-                android:layout_below="@+id/reminds_recycler"
-                android:layout_alignRight="@+id/cameraButton"
-                android:layout_alignEnd="@+id/cameraButton"
-                android:src="@android:drawable/ic_menu_add"
+                android:layout_alignTop="@+id/remindsLabel"
+                android:layout_alignRight="@+id/plantPhoto"
+                android:layout_alignEnd="@+id/plantPhoto"
+                android:src="@drawable/ic_alarm_add_black_36dp"
                 android:onClick="initDialog"/>
             <View style="@style/Divider"
-                android:layout_below="@id/imageButton2"
-                android:id="@+id/view3" />
+                android:layout_below="@id/reminds_recycler"
+                android:id="@+id/view3"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"/>
 
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/deleteButton"
+                android:src="@drawable/ic_delete_black_36dp"
+                android:layout_alignTop="@+id/date"
+                android:layout_alignRight="@+id/plantPhoto"
+                android:layout_alignEnd="@+id/plantPhoto" />
 
-
-
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="Small Text"
+                android:id="@+id/date"
+                android:layout_below="@+id/view5"
+                android:layout_centerHorizontal="true"
+                android:textColor="@color/textBright" />
 
 
         </RelativeLayout>

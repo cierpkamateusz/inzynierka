@@ -23,6 +23,16 @@ public class Plant implements Serializable {
     private String imageAdress;
     @SerializedName("location")
     private String location;
+    @SerializedName("created_at")
+    private String date;
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
 
     public int getIdUserPlant() {
         return idUserPlant;

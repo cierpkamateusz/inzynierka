@@ -20,6 +20,7 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -31,10 +32,13 @@ import android.widget.Toast;
 
 import com.example.mateusz.plant.ClickListener;
 import com.example.mateusz.plant.DBconnection.DBConnection;
+import com.example.mateusz.plant.DBconnection.OnDownloadFinishedListener;
+import com.example.mateusz.plant.Factory;
 import com.example.mateusz.plant.R;
 import com.example.mateusz.plant.RecyclerTouchListener;
 import com.example.mateusz.plant.activities.MyActivity;
 import com.example.mateusz.plant.activities.NewRemindActivity.NewRemindActivity;
+import com.example.mateusz.plant.model.Message;
 import com.example.mateusz.plant.model.Plant;
 import com.example.mateusz.plant.model.Remind;
 import com.squareup.picasso.Picasso;
@@ -57,6 +61,7 @@ public class PlantActivity extends MyActivity implements PlantInterface, SensorE
     private TextView labelDescription;
     private TextView labelReminds;
     private EditText location;
+    private TextView date;
     private RecyclerView remindsRecycler;
     private RecyclerView.Adapter remindsAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
@@ -70,10 +75,13 @@ public class PlantActivity extends MyActivity implements PlantInterface, SensorE
     List<String> remindNames;
     private ImageView plantPhoto;
     protected Plant plant;
+
+    private AlertDialog.Builder builder;
     AlertDialog pictureDialog;
     private ImageView imageView;
     private ImageButton cameraButton;
-
+    private ImageButton deleteButton;
+    DBConnection conn;
     // Activity request codes
     public static final int CAMERA_CAPTURE_IMAGE_REQUEST_CODE = 100;
     public static final int CAMERA_CAPTURE_VIDEO_REQUEST_CODE = 200;
@@ -92,6 +100,7 @@ public class PlantActivity extends MyActivity implements PlantInterface, SensorE
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_plant);
+        conn = Factory.getApiConnection();
         Toolbar myToolbar = (Toolbar) findViewById(R.id.include);
         setSupportActionBar(myToolbar);
         Typeface type = Typeface.createFromAsset(getAssets(),"fonts/Comfortaa Thin.ttf");
@@ -106,6 +115,7 @@ public class PlantActivity extends MyActivity implements PlantInterface, SensorE
         latinName.setTypeface(type);
         description = (TextView)findViewById(R.id.description);
         description.setTypeface(type);
+        date = (TextView) findViewById(R.id.date);
         location = (EditText)findViewById(R.id.location);
         location.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             public void onFocusChange(View v, boolean hasFocus) {
@@ -123,6 +133,8 @@ public class PlantActivity extends MyActivity implements PlantInterface, SensorE
         plantName.setText(plant.getPlant_name());
         latinName.setText(plant.getLatin_name());
         description.setText(plant.getDescription());
+        date.setText(plant.getDate());
+        date.setTypeface(type);
         plantPhoto = (ImageView) findViewById(R.id.plantPhoto);
         cameraButton = (ImageButton) findViewById(R.id.cameraButton);
         cameraButton.setOnClickListener(new View.OnClickListener() {
@@ -131,7 +143,39 @@ public class PlantActivity extends MyActivity implements PlantInterface, SensorE
                 if(presenter.isDeviceSupportCamera()) captureImage();
             }
         });
+        builder = new AlertDialog.Builder(this);
+        deleteButton = (ImageButton) findViewById(R.id.deleteButton) ;
+        deleteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                builder.setMessage("Czy chcesz usunąć roślinę?").setTitle("Uwaga");
+                builder.setPositiveButton("Tak", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        conn.deleteUserPlant(plant.getIdUserPlant(), new OnDownloadFinishedListener<Message>() {
+                            @Override
+                            public void onSuccess(Message arg) {
+                                Log.d("deletePlant", arg.getMessage());
+                                finish();
+                            }
 
+                            @Override
+                            public void onError(Throwable t) {
+
+                            }
+                        });
+                    }
+                });
+                builder.setNegativeButton("Nie", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                });
+                AlertDialog alertDialog = builder.create();
+                alertDialog.show();
+            }
+        });
 
         plantPhoto.setOnClickListener(new View.OnClickListener() {
             @Override

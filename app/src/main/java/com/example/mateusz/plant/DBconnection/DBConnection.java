@@ -156,13 +156,19 @@ public class DBConnection implements DBConnectionInt{
                                    Response<UploadResponse> response) {
                 Log.v("Upload", "success");
 //                Log.d("Response", response.body().getFile_name());
-//                try {
-//                    System.out.println(response.errorBody().string());
-//                } catch (IOException e) {
-//                    e.printStackTrace();
-//                }
-                Log.d("OOOOOOOOOOOOOOOOOOOOOOO",response.body().getMessage());
-                Log.d("OOOOOOOOOOOOOOOOOOOOOOO",response.body().getFile_path());
+                if(response.body()!=null){
+                    Log.d("OOOOOOOOOOOOOOOOOOOOOOO",response.body().getMessage());
+                    Log.d("OOOOOOOOOOOOOOOOOOOOOOO",response.body().getFile_path());
+                }
+                else{
+                    try {
+                        System.out.println(response.errorBody().string());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+
 
                 listener.onSuccess(response.body());
             }
@@ -311,6 +317,41 @@ public class DBConnection implements DBConnectionInt{
             public void onFailure(Call<Message> call, Throwable t) {
                 onDownloadFinishedListener.onError(t);
 
+            }
+        });
+    }
+    public void deleteUserPlant(int idUserPlant, final OnDownloadFinishedListener<Message> onDownloadFinishedListener) {
+        Call<Message> call = api.deleteUserPlant(idUserPlant);
+        call.enqueue(new Callback<Message>() {
+            @Override
+            public void onResponse(Call<Message> call, Response<Message> response) {
+                onDownloadFinishedListener.onSuccess(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<Message> call, Throwable t) {
+                onDownloadFinishedListener.onError(t);
+
+            }
+        });
+    }
+    public void uploadRemind(int idRemind, String date, final OnDownloadFinishedListener<Message> onDownloadFinishedListener) {
+        Log.d("uploadRemind",date);
+        Call<Message> call = api.updateRemind(date,idRemind);
+        call.enqueue(new Callback<Message>() {
+            @Override
+            public void onResponse(Call<Message> call, Response<Message> response) {
+                try {
+                    System.out.println(response.errorBody().string());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                onDownloadFinishedListener.onSuccess(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<Message> call, Throwable t) {
+                onDownloadFinishedListener.onError(t);
             }
         });
     }
