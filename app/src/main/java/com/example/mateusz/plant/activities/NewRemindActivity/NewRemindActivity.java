@@ -1,5 +1,6 @@
 package com.example.mateusz.plant.activities.NewRemindActivity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
@@ -7,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -45,6 +47,8 @@ public class NewRemindActivity extends MyActivity {
      */
     private SectionsPagerAdapter mSectionsPagerAdapter;
     private DBConnection conn;
+
+
     private static List<ActionType> actions = null;
     private static int idUserPlant;
     /**
@@ -61,6 +65,7 @@ public class NewRemindActivity extends MyActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.include);
         setSupportActionBar(toolbar);
         conn = Factory.getApiConnection();
+
         Log.d("onCreateView", "onCreate");
         getActions();
 
@@ -111,6 +116,7 @@ public class NewRemindActivity extends MyActivity {
         private DBConnection conn;
         private static final String ARG_SECTION_NUMBER = "section_number";
         List<NewRemind> newReminds = new ArrayList<NewRemind>();
+        private AlertDialog.Builder builder;
         //Frequently remind
         private NumberPicker numberPicker;
         private Button addFreq;
@@ -152,9 +158,10 @@ public class NewRemindActivity extends MyActivity {
             if(getArguments().getInt(ARG_SECTION_NUMBER)==1){
                 final boolean booleanArray[] = {false,false,false,false,false,false,false};
                 View rootView = inflater.inflate(R.layout.fragment_daily_rem, container, false);
+                builder = new AlertDialog.Builder(rootView.getContext());
                 spinner = (Spinner) rootView.findViewById(R.id.spinner);
 
-                ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item);
+                ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), R.layout.spinner_item);
                 for(int i=0; i<actions.size(); i++){
                     Log.d("action",actions.get(i).getName());
                     adapter.add(actions.get(i).getName());
@@ -173,60 +180,63 @@ public class NewRemindActivity extends MyActivity {
                 addDaily.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if(cb1.isChecked())booleanArray[0]=true;
-                        else booleanArray[0]=false;
-                        if(cb2.isChecked())booleanArray[1]=true;
-                        else booleanArray[1]=false;
-                        if(cb3.isChecked())booleanArray[2]=true;
-                        else booleanArray[2]=false;
-                        if(cb4.isChecked())booleanArray[3]=true;
-                        else booleanArray[3]=false;
-                        if(cb5.isChecked())booleanArray[4]=true;
-                        else booleanArray[4]=false;
-                        if(cb6.isChecked())booleanArray[5]=true;
-                        else booleanArray[5]=false;
-                        if(cb7.isChecked())booleanArray[6]=true;
-                        else booleanArray[6]=false;
-                        if(booleanArray[6])Log.d("addDaily","asd");
+                        booleanArray[0] = cb1.isChecked();
+                        booleanArray[1] = cb2.isChecked();
+                        booleanArray[2] = cb3.isChecked();
+                        booleanArray[3] = cb4.isChecked();
+                        booleanArray[4] = cb5.isChecked();
+                        booleanArray[5] = cb6.isChecked();
+                        booleanArray[6] = cb7.isChecked();
+
 
                         {
                             for(int i=0; i<booleanArray.length; i++){
                                 if(booleanArray[i]){
                                     Log.d("array[i]",String.valueOf(i));
                                     String date = "";
-                                    Calendar current = Calendar.getInstance();
-                                    int currentDayOfWeek = current.get(Calendar.DAY_OF_WEEK);
+
                                     switch(i){
-                                        case 0: date = getDateOfDayOfWeek(current, currentDayOfWeek,Calendar.MONDAY); break;
-                                        case 1: date = getDateOfDayOfWeek(current, currentDayOfWeek,Calendar.TUESDAY); break;
-                                        case 2: date = getDateOfDayOfWeek(current, currentDayOfWeek,Calendar.WEDNESDAY); break;
-                                        case 3: date = getDateOfDayOfWeek(current, currentDayOfWeek,Calendar.THURSDAY); break;
-                                        case 4: date = getDateOfDayOfWeek(current, currentDayOfWeek,Calendar.FRIDAY); break;
-                                        case 5: date = getDateOfDayOfWeek(current, currentDayOfWeek,Calendar.SATURDAY); break;
-                                        case 6: date = getDateOfDayOfWeek(current, currentDayOfWeek,Calendar.SUNDAY); break;
+                                        case 0: date = getDateOfDayOfWeek(Calendar.MONDAY); break;
+                                        case 1: date = getDateOfDayOfWeek(Calendar.TUESDAY); break;
+                                        case 2: date = getDateOfDayOfWeek(Calendar.WEDNESDAY); break;
+                                        case 3: date = getDateOfDayOfWeek(Calendar.THURSDAY); break;
+                                        case 4: date = getDateOfDayOfWeek(Calendar.FRIDAY); break;
+                                        case 5: date = getDateOfDayOfWeek(Calendar.SATURDAY); break;
+                                        case 6: date = getDateOfDayOfWeek(Calendar.SUNDAY); break;
                                         default: break;
                                     }
-
-
                                     NewRemind newRemind = new NewRemind();
                                     newRemind.setDate(date);
                                     newRemind.setIdAction(spinner.getSelectedItemPosition()+1);
                                     newRemind.setType("d");
                                     newReminds.add(newRemind);
-
-
-
                                 }
                             }
                         }
-                        addNewReminds();
+                        builder.setMessage("Czy chcesz dodać nowe przypomnienie?").setTitle("Uwaga");
+                        builder.setPositiveButton("Tak", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                addNewReminds();
+                            }
+                        });
+                        builder.setNegativeButton("Nie", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                newReminds.clear();
+                            }
+                        });
+
+                        AlertDialog dialog = builder.create();
+                        dialog.show();
+
                     }
 
-                    private String getDateOfDayOfWeek(Calendar current, int calendar, int i) {
+                    private String getDateOfDayOfWeek(int i) {
                         Calendar curr = Calendar.getInstance();
                         while(curr.get(Calendar.DAY_OF_WEEK)!=i)
                             curr.add(Calendar.DATE,1);
-                        return makeDate(current.get(Calendar.YEAR),curr.get(Calendar.MONTH)+1,curr.get(Calendar.DAY_OF_MONTH));
+                        return makeDate(curr.get(Calendar.YEAR),curr.get(Calendar.MONTH)+1,curr.get(Calendar.DAY_OF_MONTH));
                     }
 
 
@@ -238,8 +248,8 @@ public class NewRemindActivity extends MyActivity {
             else if(getArguments().getInt(ARG_SECTION_NUMBER)==2){
                 View rootView = inflater.inflate(R.layout.fragment_freq_rem, container, false);
                 spinner = (Spinner) rootView.findViewById(R.id.spinner);
-
-                ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item);
+                builder = new AlertDialog.Builder(rootView.getContext());
+                ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(),  R.layout.spinner_item);
                 for(int i=0; i<actions.size(); i++){
                     adapter.add(actions.get(i).getName());
                 }
@@ -265,7 +275,22 @@ public class NewRemindActivity extends MyActivity {
                         newRemind.setIdAction(spinner.getSelectedItemPosition()+1);
                         newRemind.setType(String.valueOf(numberPicker.getValue()));
                         newReminds.add(newRemind);
-                        addNewReminds();
+                        builder.setMessage("Czy chcesz dodać nowe przypomnienie?").setTitle("Uwaga");
+                        builder.setPositiveButton("Tak", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                addNewReminds();
+                            }
+                        });
+                        builder.setNegativeButton("Nie", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                newReminds.clear();
+                            }
+                        });
+
+                        AlertDialog dialog = builder.create();
+                        dialog.show();
                     }
                 });
                 return rootView;
@@ -274,8 +299,8 @@ public class NewRemindActivity extends MyActivity {
             else{
                 View rootView = inflater.inflate(R.layout.fragment_single_rem, container, false);
                 spinner = (Spinner) rootView.findViewById(R.id.spinner);
-
-                ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item);
+                builder = new AlertDialog.Builder(rootView.getContext());
+                ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(),  R.layout.spinner_item);
                 for(int i=0; i<actions.size(); i++){
                     adapter.add(actions.get(i).getName());
                 }
@@ -300,7 +325,23 @@ public class NewRemindActivity extends MyActivity {
                         newRemind.setType("s");
                         newReminds.add(newRemind);
                         Log.d("Single", date);
-                        addNewReminds();
+                        builder.setMessage("Czy chcesz dodać nowe przypomnienie?").setTitle("Uwaga");
+                        builder.setPositiveButton("Tak", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                addNewReminds();
+                            }
+                        });
+                        builder.setNegativeButton("Nie", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                newReminds.clear();
+                            }
+                        });
+
+                        AlertDialog dialog = builder.create();
+                        dialog.show();
+
                     }
                 });
                 return rootView;

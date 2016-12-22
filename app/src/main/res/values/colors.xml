@@ -12,4 +12,5 @@
     <color name="secondaryBrightGray">#dfdedd</color>
     <color name="textBright">#ffffff</color>
     <color name="textDark">#080808</color>
+    <color name="gray">#465446</color>
 </resources>

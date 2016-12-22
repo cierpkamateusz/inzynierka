@@ -53,7 +53,7 @@ public class RemindsActivity extends MyActivity {
         expandableListTitle = new ArrayList<String>(expandableListDetail.keySet());
         Typeface type = Typeface.createFromAsset(getAssets(),"fonts/Comfortaa Thin.ttf");
         Typeface typeBold = Typeface.createFromAsset(getAssets(),"fonts/Comfortaa Bold.ttf");
-        expandableListAdapter = new MyExpandableListAdapter(type,typeBold,this, expandableListTitle, expandableListDetail);
+        expandableListAdapter = new MyExpandableListAdapter(type,typeBold,this, expandableListTitle, expandableListDetail,arg);
         expandableListView.setAdapter(expandableListAdapter);
         expandableListView.expandGroup(0);
 

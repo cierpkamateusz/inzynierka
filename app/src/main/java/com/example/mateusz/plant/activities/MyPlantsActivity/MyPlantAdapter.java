@@ -86,7 +86,7 @@ public class MyPlantAdapter extends RecyclerView.Adapter<MyPlantAdapter.ViewHold
 
             super(itemView);
             Typeface type = Typeface.createFromAsset(itemView.getContext().getAssets(),"fonts/Comfortaa Thin.ttf");
-            Typeface typeBold = Typeface.createFromAsset(itemView.getContext().getAssets(),"fonts/Comfortaa Thin.ttf");
+            Typeface typeBold = Typeface.createFromAsset(itemView.getContext().getAssets(),"fonts/Comfortaa Bold.ttf");
             view = itemView;
             plantName = (TextView) itemView.findViewById(R.id.nazwaRosliny);
             plantName.setTypeface(typeBold);

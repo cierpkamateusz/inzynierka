@@ -42,24 +42,24 @@ public class DBConnection implements DBConnectionInt{
 //    public static final String FILE_UPLOAD_URL = "http://192.168.0.101:8081/plant_application/images/";
     // Directory name to store captured images and videos
     public static final String IMAGE_DIRECTORY_NAME = "Plant Application";
+
+    // dodanie do zapytań nagłówka "authorization"
+    // utworzenie połączenia z serwerem
     public DBConnection() {
         OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
         httpClient.addInterceptor(new Interceptor() {
             @Override
             public okhttp3.Response intercept(Chain chain) throws IOException {
                 Request original = chain.request();
-
                 Request request = original.newBuilder().header("authorization",auth).method(original.method(),original.body()).build();
                 return chain.proceed(request);
             }
-
         });
         OkHttpClient client = httpClient.build();
         retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(client).build();
-
         api = retrofit.create(Endpoints.class);
     }
 
@@ -69,22 +69,14 @@ public class DBConnection implements DBConnectionInt{
     @Override
     public void getAllPlants(final OnDownloadFinishedListener listener) {
         Call<Plants> call = api.getAllPlants();
-        Log.d("asdasd1","dsdsadsa1");
         call.enqueue(new Callback<Plants>() {
             @Override
             public void onResponse(Call<Plants> call, Response<Plants> response) {
-                int statusCode = response.code();
-                Log.d("asdasd2OOOOOOOOO",String.valueOf(response.code()));
-
-
                 Plants plants = response.body();
                 listener.onSuccess(plants);
-
             }
-
             @Override
             public void onFailure(Call<Plants> call, Throwable t) {
-                Log.d("asdasd3","dsdsadsa3");
                 listener.onError(t);
             }
         });
@@ -158,7 +150,7 @@ public class DBConnection implements DBConnectionInt{
 //                Log.d("Response", response.body().getFile_name());
                 if(response.body()!=null){
                     Log.d("OOOOOOOOOOOOOOOOOOOOOOO",response.body().getMessage());
-                    Log.d("OOOOOOOOOOOOOOOOOOOOOOO",response.body().getFile_path());
+//                    Log.d("OOOOOOOOOOOOOOOOOOOOOOO",response.body().getFile_path());
                 }
                 else{
                     try {
@@ -341,17 +333,33 @@ public class DBConnection implements DBConnectionInt{
         call.enqueue(new Callback<Message>() {
             @Override
             public void onResponse(Call<Message> call, Response<Message> response) {
-                try {
-                    System.out.println(response.errorBody().string());
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+//                try {
+//                    System.out.println(response.errorBody().string());
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                }
                 onDownloadFinishedListener.onSuccess(response.body());
             }
 
             @Override
             public void onFailure(Call<Message> call, Throwable t) {
                 onDownloadFinishedListener.onError(t);
+            }
+        });
+    }
+
+    public void updateLocation(int idUserPlant, String location, OnDownloadFinishedListener<Message> onDownloadFinishedListener) {
+
+        Call<Message> call = api.updateLocation(idUserPlant, location);
+        call.enqueue(new Callback<Message>() {
+            @Override
+            public void onResponse(Call<Message> call, Response<Message> response) {
+
+            }
+
+            @Override
+            public void onFailure(Call<Message> call, Throwable t) {
+
             }
         });
     }

@@ -129,17 +129,6 @@
                 android:background="@color/secondaryDarkGray"
                 android:alpha="0.7" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="Large Text"
-                android:id="@+id/sensorValue"
-                android:textColor="@color/textBright"
-                android:layout_below="@+id/latinName"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentEnd="true" />
-
             <View style="@style/Divider"
                 android:layout_below="@id/description"
                 android:id="@+id/view2"

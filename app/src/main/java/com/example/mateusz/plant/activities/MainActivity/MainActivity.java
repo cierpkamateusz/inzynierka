@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.mateusz.plant.R;
+import com.example.mateusz.plant.activities.LightMeasureActivity.LightMeasureActivity;
 import com.example.mateusz.plant.activities.MyActivity;
 import com.example.mateusz.plant.activities.MyPlantsActivity.MyPlantsActivity;
 import com.example.mateusz.plant.activities.RemindActivity.RemindsActivity;
@@ -18,6 +19,7 @@ public class MainActivity extends MyActivity implements IMainActivity {
 
     private Button bGoToMyPlantsActivity;
     private Button bGoToRemindsActivity;
+    private Button bGoToMeasureAcitvity;
     private User user;
     private TextView name;
     @Override
@@ -38,6 +40,8 @@ public class MainActivity extends MyActivity implements IMainActivity {
         bGoToMyPlantsActivity.setTypeface(type);
         bGoToRemindsActivity = (Button)findViewById(R.id.goToMyReminds);
         bGoToRemindsActivity.setTypeface(type);
+        bGoToMeasureAcitvity = (Button) findViewById(R.id.goToMeasureActivity);
+        bGoToMeasureAcitvity.setTypeface(type);
 
 
 
@@ -57,7 +61,14 @@ public class MainActivity extends MyActivity implements IMainActivity {
 
     @Override
     public void goToAllPlantsActvity(View view) {
+        Intent intent = new Intent(this, RemindsActivity.class);
+        startActivity(intent);
+    }
 
+    @Override
+    public void goToMeasureActivity(View view) {
+        Intent i = new Intent(this, LightMeasureActivity.class);
+        startActivity(i);
     }
 
 }

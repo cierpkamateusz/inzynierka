@@ -22,4 +22,6 @@
     <string name="your_name">Twoje imię</string>
     <string name="email">Email</string>
     <string name="password">Hasło</string>
+    <string name="no_plants_added">Kliknij + aby dodać roślinę</string>
+    <string name="light_measure">POMIAR ŚWIATŁA</string>
 </resources>

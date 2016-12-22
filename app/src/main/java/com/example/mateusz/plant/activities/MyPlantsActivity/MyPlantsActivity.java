@@ -1,6 +1,7 @@
 package com.example.mateusz.plant.activities.MyPlantsActivity;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -37,7 +38,7 @@ public class MyPlantsActivity extends MyActivity implements IMyPlants {
         setContentView(R.layout.activity_my_plants);
         Toolbar myToolbar = (Toolbar) findViewById(R.id.include);
         setSupportActionBar(myToolbar);
-
+        Typeface typeBold = Typeface.createFromAsset(this.getAssets(),"fonts/Comfortaa Bold.ttf");
         myPlantsRecycler = (RecyclerView) findViewById(R.id.my_plants_recycler);
         myPlantsRecycler.setHasFixedSize(false);
         mLayoutManager = new LinearLayoutManager(this);
@@ -61,6 +62,7 @@ public class MyPlantsActivity extends MyActivity implements IMyPlants {
         }));
         progressBar = (ProgressBar)findViewById(R.id.my_plants_progressBar);
         textEmptyView = (TextView) findViewById(R.id.textEmptyView);
+        textEmptyView.setTypeface(typeBold);
         presenter = new MyPlantsPresenter(this);
         showProgress();
 

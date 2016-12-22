@@ -2,16 +2,11 @@ package com.example.mateusz.plant.activities.PlantActivity;
 
 import android.Manifest;
 import android.app.Activity;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Typeface;
-import android.hardware.Sensor;
-import android.hardware.SensorEvent;
-import android.hardware.SensorEventListener;
-import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
@@ -52,12 +47,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class PlantActivity extends MyActivity implements PlantInterface, SensorEventListener {
+public class PlantActivity extends MyActivity implements PlantInterface {
 
     private TextView plantName;
     private TextView latinName;
     private TextView description;
-    private TextView sensorValue;
+
     private TextView labelDescription;
     private TextView labelReminds;
     private EditText location;
@@ -69,8 +64,7 @@ public class PlantActivity extends MyActivity implements PlantInterface, SensorE
         return plantPhoto;
     }
 
-    private SensorManager sensorManager;
-    private Sensor lightSensor;
+
     HashMap<String, List<Remind>> remindMap;
     List<String> remindNames;
     private ImageView plantPhoto;
@@ -117,19 +111,38 @@ public class PlantActivity extends MyActivity implements PlantInterface, SensorE
         description.setTypeface(type);
         date = (TextView) findViewById(R.id.date);
         location = (EditText)findViewById(R.id.location);
+
         location.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             public void onFocusChange(View v, boolean hasFocus) {
                 if (!hasFocus) {
                     hideKeyboard(v);
+                    builder.setMessage("Czy chcesz zmienić lokalizację rośliny?").setTitle("Uwaga");
+                    builder.setPositiveButton("Tak", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            presenter.locationChanged(plant.getIdUserPlant(),location.getText());
+                        }
+                    });
+                    builder.setNegativeButton("Nie", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+
+                        }
+                    });
+                    AlertDialog alertDialog = builder.create();
+                    alertDialog.show();
+
+
                 }
             }
         });
+
         location.setTypeface(type);
-        sensorValue = (TextView)findViewById(R.id.sensorValue);
-        sensorValue.setTypeface(typeBold);
+
         presenter = new PlantPresenter(this);
         Intent intent = getIntent();
         plant = (Plant)intent.getSerializableExtra("Plant");
+        location.setText(plant.getLocation());
         plantName.setText(plant.getPlant_name());
         latinName.setText(plant.getLatin_name());
         description.setText(plant.getDescription());
@@ -184,8 +197,7 @@ public class PlantActivity extends MyActivity implements PlantInterface, SensorE
                 loadPicture2(DBConnection.PHOTO_URL+plant.getImageAdress());
             }
         });
-        sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
-        lightSensor = sensorManager.getDefaultSensor(Sensor.TYPE_LIGHT);
+
         recyclerInit();
     }
 
@@ -390,30 +402,20 @@ public class PlantActivity extends MyActivity implements PlantInterface, SensorE
     }
 
 
-    @Override
-    public void onSensorChanged(SensorEvent event) {
-        float brightnessLevel = event.values[0];
-        sensorValue.setText(String.valueOf(brightnessLevel));
-    }
-
-    @Override
-    public void onAccuracyChanged(Sensor sensor, int accuracy) {
-
-    }
 
     @Override
     protected void onResume() {
         super.onResume();
         presenter.loadPicture(DBConnection.PHOTO_URL+plant.getImageAdress());
         pictureDialogInit();
-        sensorManager.registerListener(this, lightSensor, SensorManager.SENSOR_DELAY_NORMAL);
+
         presenter.getPlantReminds();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        sensorManager.unregisterListener(this);
+
 
     }
 

@@ -14,6 +14,7 @@ import com.example.mateusz.plant.DBconnection.DBConnection;
 import com.example.mateusz.plant.DBconnection.OnDownloadFinishedListener;
 import com.example.mateusz.plant.Factory;
 import com.example.mateusz.plant.activities.MainActivity.MainActivity;
+import com.example.mateusz.plant.model.Message;
 import com.example.mateusz.plant.model.Remind;
 import com.example.mateusz.plant.model.UploadResponse;
 import com.squareup.picasso.Picasso;
@@ -286,4 +287,20 @@ public class PlantPresenter implements PlantPresenterInt {
         return mediaFile;
     }
 
+    public void locationChanged(int idUserPlant, CharSequence s) {
+        String location = s.toString();
+        Log.d("locationCha", location);
+        conn.updateLocation(idUserPlant, location, new OnDownloadFinishedListener<Message>() {
+            @Override
+            public void onSuccess(Message arg) {
+
+            }
+
+            @Override
+            public void onError(Throwable t) {
+
+            }
+        });
+//        con
+    }
 }

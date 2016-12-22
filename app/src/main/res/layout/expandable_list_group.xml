@@ -3,7 +3,7 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
 
-    android:background="@color/secondaryDarkGray"
+    android:background="@color/textBright"
     android:alpha="0.7">
 
     <TextView
@@ -15,6 +15,6 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_margin="10dp"
-        android:textColor="@color/textBright" />
+        android:textColor="@color/secondaryDarkGray" />
 
 </RelativeLayout>

@@ -10,5 +10,6 @@ public interface IMainActivity {
     void goToMyPlantsActivity(View view);
     void goToMyRemindsActivity(View view);
     void goToAllPlantsActvity(View view);
+    void goToMeasureActivity(View view);
 
 }
